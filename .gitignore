@@ -1,0 +1,19 @@
+# Carpetas de dependencias
+node_modules/
+frontend/node_modules/
+
+# Entornos virtuales
+env/
+backend/env/
+venv/
+
+# Python cache y DB
+__pycache__/
+*.pyc
+db.sqlite3
+
+# Build de React
+frontend/dist/
+
+# Archivos de sistema
+.DS_Store
