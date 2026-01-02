@@ -1,7 +1,27 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from core.models import *
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Añadimos datos personalizados al TOKEN (se guardan dentro del JWT)
+        token['username'] = user.username
+        token['is_staff'] = user.is_staff
+        return token
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        
+        # Añadimos datos personalizados a la RESPUESTA JSON (fácil acceso para React)
+        data['is_staff'] = self.user.is_staff
+        data['username'] = self.user.username
+        return data
+
+# Serializador del registro de usuarios
 class RegistroSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
@@ -9,6 +29,7 @@ class RegistroSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'password', 'is_staff']
 
+    # Funcion que ignresa los datos en el modelo usuario
     def create(self, validated_data):
         user = User.objects.create_user(
             username=validated_data['username'],

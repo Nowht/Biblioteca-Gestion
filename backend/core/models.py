@@ -20,7 +20,7 @@ class Libro(models.Model):
     fecha_publicacion = models.DateField()
     portada = models.URLField(blank=True)
     cantidad = models.PositiveIntegerField(default=1)
-    descripcion = models.TextField(blank=True)
+    descripcion = models.TextField(blank=True, default="Sin descripción disponible")
 
     genero = models.ForeignKey(Genero, on_delete=models.SET_NULL, null=True)
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='disponible')
@@ -35,7 +35,7 @@ class Prestamo(models.Model):
     fecha_inicio = models.DateTimeField(auto_now_add=True)
     fecha_devolucion_esperada = models.DateField()
     fecha_entregado_real = models.DateField(null=True, blank=True)
-    notas = models.TextField(blank=True)
+    notas = models.TextField(blank=True, default="No hay observaciones")
     devuelto = models.BooleanField(default=False)
 
     def __str__(self):

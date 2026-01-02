@@ -36,7 +36,7 @@ function App() {
         <Route path='/login' element={<FullScreenCenter><LoginPage /></FullScreenCenter>} />
         <Route path='/dashboard' element={<DashboardLayout><DashboardPage /></DashboardLayout>} />
         <Route path='/dashboard/books' element={<DashboardLayout><BookAdminPage /></DashboardLayout>} />
-        <Route path='/dashboard/books/detail' element={<DashboardLayout><BookDetailPage /></DashboardLayout>} />
+        <Route path='/dashboard/books/detail/:id' element={<DashboardLayout><BookDetailPage /></DashboardLayout>} />
         <Route path='/dashboard/books/edit' element={<DashboardLayout><EditBookPage /></DashboardLayout>} />
         <Route path='/dashboard/books/add' element={<DashboardLayout><AddBookPage /></DashboardLayout>} />
         <Route path='/dashboard/users' element={<DashboardLayout><UsersAdminPage /></DashboardLayout>} />

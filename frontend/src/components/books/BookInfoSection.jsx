@@ -27,7 +27,7 @@ function BookInfoSection({ info }) {
             {/* Título y disponibilidad - Usamos flex para poner la insignia al lado */}
             <header className="mb-4 pb-3 border-b border-gray-200 flex items-center justify-between">
                 <div className="flex items-center">
-                    <h1 className="text-3xl font-extrabold text-gray-900">
+                    <h1 className="text-xl md:text-3xl font-extrabold text-gray-900">
                         {info.titulo}
                     </h1>
                     {/* La insignia se muestra junto al título */}
@@ -62,7 +62,7 @@ function BookInfoSection({ info }) {
                 <div className="pt-2">
                     <p className="font-semibold text-gray-600 mb-1">Descripción:</p>
                     <p className="text-sm text-gray-800 leading-relaxed bg-gray-50 p-3 rounded-lg border border-gray-100">
-                        {info.descripcion}
+                        {info.descripcion || "Sin descripcion disponible" }
                     </p>
                 </div>
 
@@ -71,7 +71,7 @@ function BookInfoSection({ info }) {
                     <span className="font-semibold text-gray-600 w-24">Género:</span>
                     {/* Insignia de Género */}
                     <span className="px-3 py-1 bg-indigo-500 text-white text-xs font-semibold rounded-full shadow-md md:hover:bg-indigo-600 transition">
-                        {info.genero}
+                        {info.genero|| "General"}
                     </span>
                 </p>
             </div>
