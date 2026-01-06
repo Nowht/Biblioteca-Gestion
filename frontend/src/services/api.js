@@ -17,3 +17,9 @@ export const getBooks = () => api.get('libro/')
 export const getBook = (id) => api.get(`libro/${id}/`)
 
 export const logIn = (data) => api.post('token/', data)
+
+export const getDashboardStats = () => api.get('dashboard-stats/')
+
+export const getChartStats = () => api.get('chart-stats/')
+
+export const getUsers = () => api.get('users/')

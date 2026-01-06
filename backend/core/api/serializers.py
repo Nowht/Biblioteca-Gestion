@@ -41,7 +41,7 @@ class RegistroSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username']
+        fields = ['id', 'username', 'is_staff', 'date_joined']
 
 class GeneroSerializer(serializers.ModelSerializer):
     class Meta:

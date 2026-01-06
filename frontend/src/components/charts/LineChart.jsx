@@ -3,27 +3,27 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
-export const LineChart = () => {
+export const LineChart = ({ labels, dataValues, labelTitle, color='rgb(75, 192, 192)' }) => {
 
   const option = {
     responsive: true,
     maintainAspectRatio: false
   }
 
-  const data1 = {
-    labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"],
+  const data = {
+    labels: labels,
     datasets: [
       {
-        label: "Prestamos Semanales",
-        data: [12, 19, 3, 5, 2, 3, 7],
+        label: labelTitle,
+        data: dataValues,
         fill: false,
-        borderColor: 'rgb(75, 192, 192)',
+        borderColor: color,
         tension: 0.1
       }
     ]
   }
 
   return (
-    <Line data={data1} options={option} />
+    <Line data={data} options={option} />
   )
 }

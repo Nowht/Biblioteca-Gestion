@@ -7,7 +7,7 @@ function FormField({
     onChange,
     options = [],
     placeholder,
-    className = ''
+    className = '',
 }) {
     const baseClass = "ml-auto border bg-gray-50 border-gray-300 rounded px-3 py-2 w-full text-black";
 

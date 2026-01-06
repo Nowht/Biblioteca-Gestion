@@ -1,7 +1,11 @@
 from rest_framework import viewsets, mixins
+from django.db.models import Count
+from django.db.models.functions import TruncDate
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework.permissions import SAFE_METHODS, BasePermission
 from core.models import Libro, Genero, Prestamo, User
-from .serializers import LibroSerializer, GeneroSerializer, PrestamoSerializer, RegistroSerializer, MyTokenObtainPairSerializer
+from .serializers import LibroSerializer, GeneroSerializer, PrestamoSerializer, RegistroSerializer, MyTokenObtainPairSerializer, UserSerializer
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -17,6 +21,11 @@ class IsAdminOrReadOnly(BasePermission):
         if request.method in SAFE_METHODS:
             return True
         return bool(request.user and request.user.is_staff)
+
+class UserViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAdminOrReadOnly]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 class LibroViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
@@ -45,3 +54,37 @@ class RegistroViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     permission_classes = [IsAdminOrReadOnly]
     queryset = User.objects.all()
     serializer_class = RegistroSerializer
+
+# Vista para las estadisticas del dashboard
+class DashBoardStatsView(APIView):
+    def get(self,request):
+        return Response({
+            "libros": Libro.objects.count(),
+            "Prestamos": Prestamo.objects.count(),
+            "usuarios": User.objects.count(),
+        })
+    
+
+class GraficoStatsView(APIView):
+    def get(self, request):
+        # Obtener el conteo de prestamos de ultimos 7 dias
+        prestamos_data = (
+            Prestamo.objects
+            .annotate(fecha=TruncDate('fecha_inicio'))
+            .values('fecha')
+            .annotate(total=Count('id'))
+            .order_by('fecha')[:7]
+        )
+
+        ususarios_data = (
+            User.objects
+            .annotate(fecha=TruncDate('date_joined'))
+            .values('fecha')
+            .annotate(total=Count('id'))
+            .order_by('fecha')[:7]
+        )
+
+        return Response({
+            "prestamos": list(prestamos_data),
+            "usuarios": list(ususarios_data),
+        })

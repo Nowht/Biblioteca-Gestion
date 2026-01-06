@@ -10,11 +10,11 @@ import ButtonLink from "../ui/ButtonLink"
 import Button from "../ui/Button"
 
 const menuItems = [
-  { to: "/dashboard", icon: <LayoutDashboard size={20} />, label: "Dashboard" },
-  { to: "/", icon: <Home size={20} />, label: "Inicio" },
-  { to: "/dashboard/books", icon: <Library size={20} />, label: "Libros" },
-  { to: "/dashboard/users", icon: <User size={20} />, label: "Usuarios" },
-  { to: "/dashboard/loans", icon: <HandHelping size={20} />, label: "Préstamos" },
+  { to: "/dashboard", icon: <LayoutDashboard size={20} />, label: "Dashboard", key: "dashboard" },
+  { to: "/", icon: <Home size={20} />, label: "Inicio", key: "inicio" },
+  { to: "/dashboard/books", icon: <Library size={20} />, label: "Libros", key: "libros" },
+  { to: "/dashboard/users", icon: <User size={20} />, label: "Usuarios", key: "usuarios" },
+  { to: "/dashboard/loans", icon: <HandHelping size={20} />, label: "Préstamos", key: "prestamos" },
 ];
 
 function DashboardLayout({ children }) {
@@ -39,7 +39,7 @@ function DashboardLayout({ children }) {
                 <UserRound size={20} />
               </div>
               <div className="overflow-hidden">
-                <p className="text-sm font-medium truncate">{user.username}</p>
+                <p className="text-sm font-medium truncate capitalize">{user?.username}</p>
                 <p className="text-[10px] text-gray-400">Administrador</p>
               </div>
             </div>
@@ -50,7 +50,7 @@ function DashboardLayout({ children }) {
         </div>
         <ul className="space-y-4">
           {menuItems.map((item) => (
-            <li key={item.to}>
+            <li key={item.key}>
               <ButtonLink to={item.to} variant="slide" className="flex items-center gap-3">
                 {item.icon}
                 <span>{item.label}</span>
@@ -68,7 +68,7 @@ function DashboardLayout({ children }) {
       <div className="md:hidden flex justify-between items-center bg-gray-800 p-4 border-b border-gray-200 shadow-sm">
         <span className="font-bold text-white">BiblioSoft</span>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-white">Humberto P.</span>
+          <span className="text-xs text-white capitalize">{user?.username}</span>
           <button
             onClick={()=>confirmLogout()}
             className="p-1 text-red-500"
@@ -81,7 +81,7 @@ function DashboardLayout({ children }) {
       {/* 2. BARRA INFERIOR (Solo Móvil) */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-gray-800 text-white flex justify-around p-3 z-50 border-t border-gray-700">
         {menuItems.map((item) => (
-          <ButtonLink to={item.to} className="flex flex-col items-center gap-1 text-xs">
+          <ButtonLink to={item.to} className="flex flex-col items-center gap-1 text-xs" key={item.key}>
             {item.icon}
             <span>{item.label}</span>
           </ButtonLink>

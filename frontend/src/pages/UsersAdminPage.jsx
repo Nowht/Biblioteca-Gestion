@@ -9,7 +9,11 @@ import ConfirmActionModal from "../components/modalcontent/ConfirmActionModal"
 
 import { useState } from "react"
 
+import { useUsers } from "../hooks/useUsers"
+
 function UsersAdminPage() {
+
+    const { data: users, isLoading, isError } = useUsers()
 
     const [selectedUser, setSelectedUser] = useState(null);
 
@@ -36,20 +40,29 @@ function UsersAdminPage() {
         <SectionHero title="Administración de Usuarios" paragraph="Gestiona y Crea Usuarios" createTo="/dashboard/users/add">
             <div className="h-full overflow-y-auto pr-2">
                 <ListLayout>
-                    <UserItemAdmin name="humberto" role="admin" onViewDetail={() => openDetails("humberto")} onEdit={() => openEdit("Humberto")} onDelete={() => openDelete("Humberto")} />
+                    {isLoading && <p>Cargando usuarios...</p>}
+                    {users && users.map((user) => (
+                        <UserItemAdmin
+                            key={user.id}
+                            name={user.username}
+                            role={user.is_staff ? "administrador" : "usuario"}
+                            onViewDetail={() => openDetails(user)}
+                            onEdit={() => openEdit(user)}
+                            onDelete={() => openDelete(user)} />
+                    ))}
                 </ListLayout>
             </div>
 
-            <Modal isOpen={isDetailOpen} onClose={() => setIsDetailOpen(false)} title="Detalles Usuario">
-                <UserDetailsModal user="Humberto" role="admin" />
+            <Modal isOpen={isDetailOpen} onClose={() => {setIsDetailOpen(false), setSelectedUser(null)}} title="Detalles Usuario">
+                {selectedUser && <UserDetailsModal userdata={selectedUser} />}
             </Modal>
 
             <Modal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} title="Actualizar Datos">
-                <EditUserModal user="Humberto" role="admin" />
+                {selectedUser && <EditUserModal userdata={selectedUser} />}
             </Modal>
 
             <Modal isOpen={isDeleteOpen} onClose={() => setIsDeleteOpen(false)} title="Eliminar Usuario">
-                <ConfirmActionModal content="Humberto" onCancel={() => setIsDeleteOpen(false)} />
+                {selectedUser && <ConfirmActionModal content={selectedUser.username} onCancel={() => setIsDeleteOpen(false)} />}
             </Modal>
         </SectionHero>
     )

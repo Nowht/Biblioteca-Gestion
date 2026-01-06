@@ -1,6 +1,7 @@
 import { User } from "lucide-react"
 
-function UserDetailsModal({ id = "1", user = "usuario", role = "user/admin", date = "fecha" }) {
+function UserDetailsModal({ userdata }) {
+  const {id,username, is_staff, date_joined} = userdata
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-4">
@@ -8,9 +9,9 @@ function UserDetailsModal({ id = "1", user = "usuario", role = "user/admin", dat
           <User size={50}/>
         </div>
         <div>
-          <h4 className="text-lg font-bold text-gray-900">{user}</h4>
+          <h4 className="text-lg font-bold text-gray-900">{username}</h4>
           <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full font-medium">
-            {role}
+            {is_staff ? "administrador" : "usuario"}
           </span>
         </div>
       </div>
@@ -22,7 +23,7 @@ function UserDetailsModal({ id = "1", user = "usuario", role = "user/admin", dat
         </div>
         <div>
           <p className="text-xs uppercase text-gray-500 font-bold mb-1">Fecha Registro</p>
-          <p className="text-sm font-medium">{date}</p>
+          <p className="text-sm font-medium">{date_joined}</p>
         </div>
       </div>
 
