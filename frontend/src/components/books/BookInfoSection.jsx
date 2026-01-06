@@ -5,17 +5,21 @@ import BookStatusBadge from "../books/BookStatusBadge"
 import Modal from "../common/Modal";
 import ConfirmActionModal from "../modalcontent/ConfirmActionModal";
 
+import { AuthContext } from "../../context/AuthContext"
+
 import { Pencil, Trash2 } from "lucide-react";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 function BookInfoSection({ info }) {
 
     const [selectedContent, setSelectedContent] = useState(null);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
-    const openDelete = (user) => {
-        setSelectedContent(user);
+    const { user } = useContext(AuthContext)
+
+    const openDelete = (title) => {
+        setSelectedContent(title);
         setIsDeleteOpen(true)
     }
 
@@ -34,14 +38,16 @@ function BookInfoSection({ info }) {
                     <BookStatusBadge status={info.estado} />
                 </div>
 
-                <div className="flex gap-4">
-                    <Button variant="deletenobg" onFunc={() => openDelete("Titulo")}>
-                        <Trash2 />
-                    </Button>
-                    <ButtonLink variant="edit" to="/dashboard/books/edit">
-                        <Pencil />
-                    </ButtonLink>
-                </div>
+                {user?.isStaff && (
+                    <div className="flex">
+                        <Button variant="deletenobg" onFunc={() => openDelete("Titulo")}>
+                            <Trash2 />
+                        </Button>
+                        <ButtonLink variant="edit" to="/dashboard/books/edit">
+                            <Pencil />
+                        </ButtonLink>
+                    </div>
+                )}
             </header>
 
             {/* Información del Libro */}
@@ -62,7 +68,7 @@ function BookInfoSection({ info }) {
                 <div className="pt-2">
                     <p className="font-semibold text-gray-600 mb-1">Descripción:</p>
                     <p className="text-sm text-gray-800 leading-relaxed bg-gray-50 p-3 rounded-lg border border-gray-100">
-                        {info.descripcion || "Sin descripcion disponible" }
+                        {info.descripcion || "Sin descripcion disponible"}
                     </p>
                 </div>
 
@@ -71,7 +77,7 @@ function BookInfoSection({ info }) {
                     <span className="font-semibold text-gray-600 w-24">Género:</span>
                     {/* Insignia de Género */}
                     <span className="px-3 py-1 bg-indigo-500 text-white text-xs font-semibold rounded-full shadow-md md:hover:bg-indigo-600 transition">
-                        {info.genero|| "General"}
+                        {info.genero || "General"}
                     </span>
                 </p>
             </div>

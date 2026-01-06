@@ -1,6 +1,8 @@
 import { LayoutDashboard, Home, Library, User, HandHelping, UserRound, LogOut } from "lucide-react"
 
-import { useState } from "react"
+import { useState, useContext } from "react"
+
+import { AuthContext } from "../../context/AuthContext"
 
 import Modal from "../common/Modal"
 import LogOutModal from "../modalcontent/LogOutModal"
@@ -15,14 +17,15 @@ const menuItems = [
   { to: "/dashboard/loans", icon: <HandHelping size={20} />, label: "Préstamos" },
 ];
 
-function DashboardLayout({ children, admin = "user", role = "admin" }) {
+function DashboardLayout({ children }) {
+
+  const { user, logout } = useContext(AuthContext)
 
   const [isLogOutOpen, setIsLogOutOpen] = useState(false)
 
   const confirmLogout = () => {
     setIsLogOutOpen(true)
   }
-
   return (
     <div className="h-screen overflow-hidden flex flex-col md:flex-row bg-gray-100">
 
@@ -36,7 +39,7 @@ function DashboardLayout({ children, admin = "user", role = "admin" }) {
                 <UserRound size={20} />
               </div>
               <div className="overflow-hidden">
-                <p className="text-sm font-medium truncate">{admin}</p>
+                <p className="text-sm font-medium truncate">{user.username}</p>
                 <p className="text-[10px] text-gray-400">Administrador</p>
               </div>
             </div>

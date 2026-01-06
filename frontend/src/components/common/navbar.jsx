@@ -1,22 +1,25 @@
 import Button from "../ui/Button";
 import ButtonLink from "../ui/ButtonLink";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
+
+import { AuthContext } from "../../context/AuthContext"
 
 import { Menu, X, LogOut } from "lucide-react";
 
 const menuLinks = [
-    { label: "Sobre Nosotros", to: "/about" },
-    { label: "Contacto", to: "/contact" },
-    { label: "Mis Prestamos", to: "/loans" },
+    { label: "Sobre Nosotros", to: "/about", Key: "about" },
+    { label: "Contacto", to: "/contact", Key: "contact" },
 ]
 
-function navbar({ username = "user", role = "user/admin", onExit }) {
+function navbar() {
+
+    const { user, logout } = useContext(AuthContext)
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const isLogedIn = true;
-    const isAdmin = true;
+    const isLogedIn = user !== null;
+    const isAdmin = user?.isStaff;
 
     return (
         // Agregamos relative para controlar el despliegue del menú móvil
@@ -34,11 +37,11 @@ function navbar({ username = "user", role = "user/admin", onExit }) {
                 <ul className="hidden md:flex justify-center gap-8">
 
                     {menuLinks.map((link) => (
-                        <li>
+                        <li key={link.Key}>
                             <ButtonLink variant="nav" to={link.to}>{link.label}</ButtonLink>
                         </li>
                     ))}
-
+                    { isLogedIn && <li><ButtonLink variant="nav" to="/loans">Mis Préstamos</ButtonLink></li> }
                     {isAdmin && <li><ButtonLink variant="nav" to="/dashboard">Dashboard</ButtonLink></li>}
                 </ul>
 
@@ -49,10 +52,10 @@ function navbar({ username = "user", role = "user/admin", onExit }) {
                         {isLogedIn ? (
                             <div className="flex items-center gap-3">
                                 <div className="flex flex-col text-right">
-                                    <span className="text-sm font-bold text-gray-800 leading-none">{username}</span>
-                                    <span className="text-xs text-gray-500 uppercase tracking-wide">{role}</span>
+                                    <span className="text-sm font-bold text-gray-800 leading-none">{user.username}</span>
+                                    <span className="text-xs text-gray-500 uppercase tracking-wide">{user.isStaff ? "Administrador" : "Usuario"}</span>
                                 </div>
-                                <Button variant="danger" onFunc={onExit}>
+                                <Button variant="danger" onFunc={logout}>
                                     <LogOut size={20} />
                                 </Button>
                             </div>
@@ -80,16 +83,16 @@ function navbar({ username = "user", role = "user/admin", onExit }) {
                     ))}
 
                     {isAdmin && (
-                        <ButtonLink variant="nav" to="/dashboard" onClick={() => setIsOpen(false)}>Dashboard</ButtonLink>
+                        <ButtonLink variant="nav" to="/dashboard" onClick={() => setIsOpen(false)} key="dashboard">Dashboard</ButtonLink>
                     )}
                     <hr className="border-gray-100" />
                     {isLogedIn ? (
                         <div className="flex items-center justify-around">
                             <div className="flex flex-col text-start">
-                                <span className="text-sm font-bold text-gray-800 leading-none">{username}</span>
-                                <span className="text-xs text-gray-500 uppercase tracking-wide">{role}</span>
+                                <span className="text-sm font-bold text-gray-800 leading-none">{user.username}</span>
+                                <span className="text-xs text-gray-500 uppercase tracking-wide">{user.isStaff ? "Administrador" : "Usuario"}</span>
                             </div>
-                            <Button variant="danger" onFunc={onExit}>
+                            <Button variant="danger" onFunc={logout}>
                                 <LogOut size={20} />
                             </Button>
                         </div>

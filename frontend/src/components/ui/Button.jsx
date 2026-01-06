@@ -1,4 +1,4 @@
-function Button({ children, onFunc, variant, className, type = "button" }) {
+function Button({ children, onFunc, variant, className, type = "button", disabled }) {
 
     const variants = {
 
@@ -8,7 +8,7 @@ function Button({ children, onFunc, variant, className, type = "button" }) {
         danger: "bg-red-500 text-white md:hover:bg-red-700",
         outline: "border-2 border-red-500 text-red-500 md:hover:bg-red-50",
         outlinewhite: "text-white md:hover:text-gray-300",
-
+        green: "bg-green-500 text-white md:hover:bg-green-600",
         edit: "text-gray-400 md:hover:text-blue-600 md:hover:bg-blue-50 rounded-lg",
         delete: "text-gray-400 md:hover:text-red-600 md:hover:bg-red-50 rounded-lg",
         deletenobg:"text-gray-400 md:hover:text-red-600",
@@ -19,7 +19,7 @@ function Button({ children, onFunc, variant, className, type = "button" }) {
     const CombinedClasses = `${BaseStyles} ${variants[variant]} ${className}`;
 
     return (
-        <button className={CombinedClasses} type={type} onClick={onFunc}>
+        <button className={CombinedClasses} type={type} onClick={onFunc} disabled={disabled}>
             {children}
         </button>
     )

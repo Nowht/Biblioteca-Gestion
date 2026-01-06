@@ -10,11 +10,16 @@ import UserItems from "../components/features/UserItems"
 
 import { Book, Users, HandHelping, Calendar } from "lucide-react"
 
-function DashboardPage({username="admin"}) {
+import { useContext } from "react"
+
+import { AuthContext } from "../context/AuthContext.jsx"
+
+function DashboardPage() {
+  const { user } = useContext(AuthContext)
   return (
     <>
       <header className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">¡Bienvenido, {username}!</h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-2 capitalize">¡Bienvenido, {user?.username}!</h1>
         <p className="text-gray-600">Un resumen rápido de la actividad de tu biblioteca.</p>
       </header>
 
