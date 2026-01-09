@@ -36,12 +36,12 @@ function App() {
       <Routes>
 
         {/* --- RUTA PÚBLICA --- */}
-        <Route path='/' element={<SiteLayout><Landingpage /></SiteLayout>}/>
+        <Route path='/' element={<SiteLayout><Landingpage /></SiteLayout>} />
         <Route path='/about' element={<SiteLayout><AboutPage /></SiteLayout>} />
         <Route path='/contact' element={<SiteLayout><ContactPage /></SiteLayout>} />
         <Route path='/book/:id' element={<SiteLayout><BookDetailPage /></SiteLayout>} />
         <Route path='/loans' element={<SiteLayout><LoansPage /></SiteLayout>} />
-        <Route path='/login' element={<FullScreenCenter><LoginPage /></FullScreenCenter>}/>
+        <Route path='/login' element={<FullScreenCenter><LoginPage /></FullScreenCenter>} />
 
         {/* --- RUTAS DE ADMINISTRADOR (Solo Staff) --- */}
         <Route element={<ProtectedRoute isAllowed={!!user && user.isStaff} />}>

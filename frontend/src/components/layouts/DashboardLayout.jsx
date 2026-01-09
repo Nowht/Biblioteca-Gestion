@@ -4,6 +4,8 @@ import { useState, useContext } from "react"
 
 import { AuthContext } from "../../context/AuthContext"
 
+import { Toaster } from 'react-hot-toast'
+
 import Modal from "../common/Modal"
 import LogOutModal from "../modalcontent/LogOutModal"
 import ButtonLink from "../ui/ButtonLink"
@@ -93,7 +95,7 @@ function DashboardLayout({ children }) {
         {/* pb-20 evita que la barra inferior tape el contenido */}
         <div className="min-h-full flex flex-col">
           <div className="flex-1">
-
+          <Toaster position="top-right" reverseOrder={false} /> 
             <Modal isOpen={isLogOutOpen} onClose={()=>setIsLogOutOpen(false)} >
               <LogOutModal onCancel={()=>setIsLogOutOpen(false)} />
             </Modal>

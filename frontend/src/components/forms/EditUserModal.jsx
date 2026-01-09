@@ -31,12 +31,13 @@ function EditUserModal({ userdata }) {
                     <User size={50} />
                 </div>
                 <div className="grid gap-4">
-                    <FormField label="Usuario" type="text" value={formdata.username} onChange={handleChange} />
-                    <FormField label="Rol" value={formdata.is_staff ? "admin" : "user"} options={[{ value: "admin", label: "Administrador" }, { value: "user", label: "Usuario" }]} onChange={handleChange} />
+                    <FormField name="username" label="Usuario" type="text" value={formdata.username} onChange={handleChange} />
+                    <FormField name="is_staff" label="Rol" value={formdata.is_staff ? "admin" : "user"} options={[{ value: "admin", label: "Administrador" }, { value: "user", label: "Usuario" }]} onChange={handleChange} />
+                    <FormField name="password" label="Contraseña" type="password" value={formdata.password} onChange={handleChange} />
                 </div>
             </div>
             <div className="flex justify-center gap-4">
-                <Button type="submit" variant="primary">Actualizar Datos</Button>
+                <Button type="button" variant="primary">Actualizar Datos</Button>
             </div>
         </div>
     )
