@@ -11,9 +11,11 @@ import { AuthContext } from "../context/AuthContext"
 
 import { useContext } from "react"
 
+import { toast } from "react-hot-toast"
+
 function LoginPage() {
 
-  const { user, login } = useContext(AuthContext)
+  const { login } = useContext(AuthContext)
 
   const {
     register,
@@ -40,14 +42,12 @@ function LoginPage() {
       }
 
     } catch (error) {
-      setError("root", {
-        message: "usuario u contraseña incorrecta"
-      })
+      setError("root", { type: "server", message: "Usuario o contraseña incorrectos" });
+      toast.error("Error al iniciar sesion")
     }
   }
-
   return (
-    <div className="w-full max-w-md mx-auto md:bg-blue-500 md:shadow-xl md:shadow-blue-500/50 md:rounded-xl p-8">
+    <div className="w-full max-w-md mx-auto md:bg-gray-700 md:shadow-xl md:shadow-gray-500/50 md:rounded-xl p-8">
       <form onSubmit={handleSubmit(onSubmit)}>
         <h2 className="text-2xl font-bold mb-6 text-center text-blue-500 md:text-white">Iniciar Sesión</h2>
         <div className="grid gap-4 mb-6">
@@ -56,20 +56,22 @@ function LoginPage() {
             name="username"
             type="text"
             classNameLabel="md:text-white"
+            error={errors.username}
             {...register("username", { required: "Este campo es obligatorio" })}
-            error={errors.username} />
+          />
           <FormField
             label="Contraseña"
             name="password"
             type="password"
             classNameLabel="md:text-white"
+            error={errors.password}
             {...register("password", {
               required: true, minLength: {
                 value: 8,
                 message: "La contraseña debe de tener mas de 8 caracteres"
               }
             })}
-            error={errors.password} />
+          />
         </div>
         {errors.root && <span className="text-white text-sm font-bold flex justify-center mb-5">{errors.root.message}</span>}
         <div className="flex items-center justify-center">

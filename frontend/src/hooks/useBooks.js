@@ -1,7 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
-import { getBooks, getBook } from "../services/api";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getBooks, getBook, newBook } from "../services/api";
 
-//Hook para todos los libros
+export const useCreateBook = () => {
+    const queryClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: (newBookdata) => newBook(newBookdata),
+
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey:['books']})
+        }
+    })
+}
+
 export const useBooks = () => {
     return useQuery({
         queryKey: ['books'],

@@ -11,7 +11,7 @@ import { toast } from "react-hot-toast"
 
 function AddUserForm() {
 
-    const { register, handleSubmit, setError, formState: { errors, isSubmitting }, reset } = useForm()
+    const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm()
 
     const { mutate, isLoading } = useCreateUser()
 

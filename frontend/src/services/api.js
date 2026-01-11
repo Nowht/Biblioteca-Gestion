@@ -18,7 +18,7 @@ api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
-        if (error.response.status === 401 && !originalRequest._retry) {
+        if (error.response.status === 401 && !originalRequest._retry && !originalRequest.url.includes("token/")) {
             originalRequest._retry = true;
             try {
                 const refreshToken = localStorage.getItem("refresh")
@@ -38,17 +38,26 @@ api.interceptors.response.use(
     }
 )
 
+// Endpoints de libros
 export const getBooks = () => api.get('libro/')
 export const getBook = (id) => api.get(`libro/${id}/`)
+export const newBook = (data) => api.post('libro/', data)
 
+// Endpoint para login
 export const logIn = (data) => api.post('token/', data)
 
+// Endpoints para dashboard
 export const getDashboardStats = () => api.get('dashboard-stats/')
-
 export const getChartStats = () => api.get('chart-stats/')
 
+// Endpoints para usuarios
 export const getUsers = () => api.get('users/')
 export const getUser = (id) => api.get(`users/${id}/`)
 export const newUser = (data) => api.post('registro/', data)
 export const updateUser = (id, data) => api.put(`users/${id}/`, data)
 export const deleteUser = (id) => api.delete(`users/${id}/`)
+
+// Endpoints para generos
+export const getGenres = () => api.get('genero/')
+export const getGenre = (id) => api.get(`genero/${id}/`)
+export const newGenre = (data) => api.post('genero/', data)
