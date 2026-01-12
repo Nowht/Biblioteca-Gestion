@@ -11,15 +11,19 @@ import { Pencil, Trash2 } from "lucide-react";
 
 import { useState, useContext } from "react";
 
+import { useGenre } from "../../hooks/useGenres";
+
 function BookInfoSection({ info }) {
 
     const [selectedContent, setSelectedContent] = useState(null);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
+    const { data: genero, isLoading } = useGenre(info?.genero)
+
     const { user } = useContext(AuthContext)
 
-    const openDelete = (title) => {
-        setSelectedContent(title);
+    const openDelete = (bookdata) => {
+        setSelectedContent(bookdata);
         setIsDeleteOpen(true)
     }
 
@@ -40,10 +44,10 @@ function BookInfoSection({ info }) {
 
                 {user?.isStaff && (
                     <div className="flex">
-                        <Button variant="deletenobg" onFunc={() => openDelete("Titulo")}>
+                        <Button variant="deletenobg" onFunc={() => openDelete(info)}>
                             <Trash2 />
                         </Button>
-                        <ButtonLink variant="edit" to="/dashboard/books/edit">
+                        <ButtonLink variant="edit" to={`/dashboard/books/edit/${info.id}`}>
                             <Pencil />
                         </ButtonLink>
                     </div>
@@ -77,7 +81,7 @@ function BookInfoSection({ info }) {
                     <span className="font-semibold text-gray-600 w-24">Género:</span>
                     {/* Insignia de Género */}
                     <span className="px-3 py-1 bg-indigo-500 text-white text-xs font-semibold rounded-full shadow-md md:hover:bg-indigo-600 transition">
-                        {info.genero || "General"}
+                        {info.genero ? (isLoading ? "Cargando..." : genero?.nombre) : "Sin genero"}
                     </span>
                 </p>
             </div>
@@ -98,7 +102,7 @@ function BookInfoSection({ info }) {
             </footer>
 
             <Modal isOpen={isDeleteOpen} onClose={() => setIsDeleteOpen(false)} title="Eliminar Libro">
-                <ConfirmActionModal content={selectedContent} onCancel={() => setIsDeleteOpen(false)} />
+                {selectedContent && <ConfirmActionModal content={selectedContent} onCancel={() => setIsDeleteOpen(false)} book={true} />}
             </Modal>
 
         </section>

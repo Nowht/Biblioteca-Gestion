@@ -42,6 +42,8 @@ api.interceptors.response.use(
 export const getBooks = () => api.get('libro/')
 export const getBook = (id) => api.get(`libro/${id}/`)
 export const newBook = (data) => api.post('libro/', data)
+export const updateBook = (id, data) => api.put(`libro/${id}/`, data)
+export const deleteBook = (id) => api.delete(`libro/${id}/`)
 
 // Endpoint para login
 export const logIn = (data) => api.post('token/', data)
