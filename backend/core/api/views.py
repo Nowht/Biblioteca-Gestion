@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import SAFE_METHODS, BasePermission
 from core.models import Libro, Genero, Prestamo, User
-from .serializers import LibroSerializer, GeneroSerializer, PrestamoSerializer, RegistroSerializer, MyTokenObtainPairSerializer, UserSerializer
+from .serializers import LibroSerializer, GeneroSerializer, PrestamoSerializer, RegistroSerializer, MyTokenObtainPairSerializer, UserSerializer, UpdateUserSerializer
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -25,7 +25,16 @@ class IsAdminOrReadOnly(BasePermission):
 class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+
+    def get_serializer_class(self):
+        # Cuando se hace un POST (crear usuario)
+        if self.action == 'create':
+            return RegistroSerializer
+        # Cuando se hace un PUT o PATCH (Actualizar)
+        if self.action in ['update','partial_update']:
+            return UpdateUserSerializer
+        # Cuando se hace un GET (Listar o ver detalles)
+        return UserSerializer
 
 class LibroViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
@@ -49,11 +58,6 @@ class PrestamoViewSet(viewsets.ModelViewSet):
             return Prestamo.objects.all()
         # El usuario normal SOLO ve sus propios préstamos
         return Prestamo.objects.filter(usuario=user)
-
-class RegistroViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
-    permission_classes = [IsAdminOrReadOnly]
-    queryset = User.objects.all()
-    serializer_class = RegistroSerializer
 
 # Vista para las estadisticas del dashboard
 class DashBoardStatsView(APIView):
