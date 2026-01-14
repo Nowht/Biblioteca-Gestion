@@ -2,44 +2,74 @@ import { User } from "lucide-react"
 
 import FormField from "./FormField"
 import Button from "../ui/Button"
-import ButtonLink from "../ui/ButtonLink"
-import { useState } from "react"
+import { useEffect } from "react"
 
-function EditUserModal({ userdata }) {
+import { useUser, useUpdateUser } from "../../hooks/useUsers"
 
-    const [formdata, setFormData] = useState({
-        username: userdata?.username || "",
-        is_staff: userdata?.is_staff || false,
-        password: "",
-    })
+import { useForm } from "react-hook-form"
 
-    const handleChange = (e) => {
-        const { name, value, type } = e.target
+function EditUserModal({ userdata, onClickClose }) {
 
-        const finalValue = name === "is_staff" ? (value === "admin") : value
+    const { id } = userdata
+    const { data, isLoading } = useUser(id)
+    const { register, reset, handleSubmit, formState: { isSubmitting, errors } } = useForm()
 
-        setFormData({
-            ...formdata,
-            [name]: finalValue
+    const { mutate } = useUpdateUser()
+
+    useEffect(() => {
+        if (data) {
+            // se autocompletara el formulario si los datos estan disponibles (modal abierto)
+            // evita que se autocomplete informacion sensible
+            const formValues = {
+                username: data.username ?? "",
+                is_staff: data.is_staff ?? false,
+            }
+            reset(formValues)
+        }
+    }, [data, reset])
+
+    const onSubmit = (data) => {
+        const finaldata = ({
+            ...data,
+            is_staff: !!data.is_staff,
         })
+
+        if (!finaldata.password || finaldata.password.trim() === "") {
+            delete finaldata.password
+        }
+
+        mutate({ id, data: finaldata })
+
+        onClickClose()
     }
 
     return (
-        <div className="flex flex-col space-y-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-8">
             <div className="flex justify-center items-center gap-6">
                 <div className="h-16 w-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl font-bold">
                     <User size={50} />
                 </div>
                 <div className="grid gap-4">
-                    <FormField name="username" label="Usuario" type="text" value={formdata.username} onChange={handleChange} />
-                    <FormField name="is_staff" label="Rol" value={formdata.is_staff ? "admin" : "user"} options={[{ value: "admin", label: "Administrador" }, { value: "user", label: "Usuario" }]} onChange={handleChange} />
-                    <FormField name="password" label="Contraseña" type="password" value={formdata.password} onChange={handleChange} />
+                    <FormField
+                        name="username"
+                        label="Usuario"
+                        type="text"
+                        {...register("username", { required: "Este campo es requerido" })}
+                        error={errors.username}
+                    />
+                    <FormField
+                        name="is_staff"
+                        label="Rol"
+                        options={[{ value: true, label: "Administrador" }, { value: false, label: "Usuario" }]}
+                        {...register("is_staff")}
+                    />
+                    <FormField name="password" label="Contraseña" type="password" {...register("password")} />
                 </div>
             </div>
             <div className="flex justify-center gap-4">
-                <Button type="button" variant="primary">Actualizar Datos</Button>
+                <Button type="submit" variant="primary">Actualizar Datos</Button>
             </div>
-        </div>
+        </form>
     )
 }
 

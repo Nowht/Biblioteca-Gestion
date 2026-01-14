@@ -9,11 +9,12 @@ import ConfirmActionModal from "../components/modalcontent/ConfirmActionModal"
 
 import { useState } from "react"
 
-import { useUsers } from "../hooks/useUsers"
+import { useUsers, useDeleteUser } from "../hooks/useUsers"
 
 function UsersAdminPage() {
 
     const { data: users, isLoading, isError } = useUsers()
+    const deleteUserMutation = useDeleteUser()
 
     const [selectedUser, setSelectedUser] = useState(null);
 
@@ -58,11 +59,16 @@ function UsersAdminPage() {
             </Modal>
 
             <Modal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} title="Actualizar Datos">
-                {selectedUser && <EditUserModal userdata={selectedUser} />}
+                {selectedUser && <EditUserModal userdata={selectedUser} onClickClose={() => setIsEditOpen(false)} />}
             </Modal>
 
             <Modal isOpen={isDeleteOpen} onClose={() => setIsDeleteOpen(false)} title="Eliminar Usuario">
-                {selectedUser && <ConfirmActionModal content={selectedUser.username} onCancel={() => setIsDeleteOpen(false)} />}
+                {selectedUser && <ConfirmActionModal 
+                title={selectedUser.username}
+                onCancel={() => setIsDeleteOpen(false)}
+                onConfirm={() => deleteUserMutation.mutate(selectedUser.id)}
+                isLoading={deleteUserMutation.isPending} 
+                />}
             </Modal>
         </SectionHero>
     )

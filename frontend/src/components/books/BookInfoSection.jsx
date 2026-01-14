@@ -13,12 +13,16 @@ import { useState, useContext } from "react";
 
 import { useGenre } from "../../hooks/useGenres";
 
+import { useDeleteBook } from "../../hooks/useBooks";
+
 function BookInfoSection({ info }) {
 
     const [selectedContent, setSelectedContent] = useState(null);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
     const { data: genero, isLoading } = useGenre(info?.genero)
+
+    const deleteBookMutation = useDeleteBook()
 
     const { user } = useContext(AuthContext)
 
@@ -102,7 +106,12 @@ function BookInfoSection({ info }) {
             </footer>
 
             <Modal isOpen={isDeleteOpen} onClose={() => setIsDeleteOpen(false)} title="Eliminar Libro">
-                {selectedContent && <ConfirmActionModal content={selectedContent} onCancel={() => setIsDeleteOpen(false)} book={true} />}
+                {selectedContent && <ConfirmActionModal
+                    title={selectedContent.titulo}
+                    onCancel={() => setIsDeleteOpen(false)}
+                    onConfirm={() => deleteBookMutation.mutate(selectedContent.id)}
+                    isLoading={deleteBookMutation.isPending}
+                />}
             </Modal>
 
         </section>

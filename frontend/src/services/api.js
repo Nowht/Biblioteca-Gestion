@@ -31,7 +31,8 @@ api.interceptors.response.use(
                 originalRequest.headers.Authorization = `Bearer ${res.data.access}`
                 return api(originalRequest)
             } catch (err){
-                window.location.href = '/login/'
+                localStorage.clear()
+                window.location.href = '/'
             }
         }
         return Promise.reject(error)
@@ -55,7 +56,7 @@ export const getChartStats = () => api.get('chart-stats/')
 // Endpoints para usuarios
 export const getUsers = () => api.get('users/')
 export const getUser = (id) => api.get(`users/${id}/`)
-export const newUser = (data) => api.post('registro/', data)
+export const newUser = (data) => api.post('users/', data)
 export const updateUser = (id, data) => api.put(`users/${id}/`, data)
 export const deleteUser = (id) => api.delete(`users/${id}/`)
 
