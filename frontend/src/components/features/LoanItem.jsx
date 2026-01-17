@@ -1,18 +1,23 @@
+import { useContext } from "react";
+
+import { AuthContext } from "../../context/AuthContext";
+
 function LoanItem({ 
-    title = "Don Quijote de la mancha",
-    user,
-    startDate,
-    endDate,
-    status = "active", // "active" o "history"
-    isAdmin = true,
+    loanInfo,
     onAction1, // Por ejemplo: Renovar o Editar
     onAction2  // Por ejemplo: Devolver o Eliminar
 }) {
 
-    const isHistory = status === "history";
-    const borderColors = isHistory ? "border-gray-400" : "border-green-500";
-    const opacityStyle = isHistory ? "opacity-75 grayscale-[0.5]" : "opacity-100";
+    const { user } = useContext(AuthContext)
 
+    const fechaFin = new Date(loanInfo.fecha_devolucion_esperada)
+    const fechaHoy = new Date()
+
+    const aTiempo = fechaFin < fechaHoy
+
+    const isHistory = loanInfo.devuelto === "history";
+    const borderColors = isHistory ? "border-gray-400" : ( aTiempo ? "border-red-500" : "border-green-500" );
+    const opacityStyle = isHistory ? "opacity-75 grayscale-[0.5]" : "opacity-100";
 
     return (
         <div className={`bg-white border-l-4 ${borderColors} ${opacityStyle} shadow-sm rounded-r-lg p-4 flex flex-col md:flex-row justify-between items-center gap-4 transition-all`}>
@@ -21,25 +26,26 @@ function LoanItem({
                     <span className="text-[10px]">Libro</span>
                 </div>
                 <div className="flex-1">
-                    <h3 className="font-bold text-gray-800">{title}</h3>
-                    {isAdmin &&(
-                        <p className="text-sm text-gray-500">Usuario: {user}</p>
+                    <h3 className="font-bold text-gray-800">{loanInfo.libro_detalle}</h3>
+                    {user?.isStaff &&(
+                        <p className="text-sm text-gray-500">Usuario: {loanInfo.usuario_nombre}</p>
                     )}
+                    { aTiempo &&<span className="bg-red-500 text-white py-1 px-3 rounded-full text-xs font-bold" >Devolucion Tardía</span>}
                     <div className="grid grid-cols-2 gap-2 mt-2 text-xs md:text-sm">
                         <span className="flex flex-col">
-                            <strong className="text-gray-400 uppercase text-[10px]">Salida</strong>
-                            {startDate}
+                            <strong className="text-gray-400 uppercase text-xs">Salida</strong>
+                            {loanInfo.fecha_inicio.split('T')[0]}
                         </span>
                         <span className="flex flex-col">
-                            <strong className="text-gray-400 uppercase text-[10px]">Entrega</strong>
-                            {endDate}
+                            <strong className="text-gray-400 uppercase text-xs">Entrega</strong>
+                            {loanInfo.fecha_devolucion_esperada}
                         </span>
                     </div>
                 </div>
             </div>
 
             {/* Renderizado condicional de botones: Solo si es admin y no es historial */}
-            {isAdmin && !isHistory && (
+            {user?.isStaff && !loanInfo.devuelto && (
                 <div className="flex gap-2 w-full md:w-auto">
                     <button
                         onClick={onAction1}
@@ -57,7 +63,7 @@ function LoanItem({
             )}
 
             {/* Si es historial, podemos mostrar un badge en lugar de botones */}
-            {isHistory && (
+            {loanInfo.devuelto && (
                 <span className="text-xs font-bold uppercase text-gray-400 border border-gray-300 px-3 py-1 rounded-full">
                     Completado
                 </span>

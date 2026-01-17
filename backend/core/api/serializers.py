@@ -77,9 +77,15 @@ class LibroSerializer(serializers.ModelSerializer):
 
 class PrestamoSerializer(serializers.ModelSerializer):
 
-    usuario = UserSerializer(read_only=True)
-    libro = LibroSerializer(read_only=True)
-
     class Meta:
         model = Prestamo
         fields = '__all__'
+
+    def to_representation(self, instance):
+        
+        data = super().to_representation(instance)
+
+        data['usuario_nombre'] = instance.usuario.username if instance.usuario else "Usuario no encontrado"
+        data['libro_detalle'] = instance.libro.titulo if instance.libro else "Libro no encontrado"
+
+        return data

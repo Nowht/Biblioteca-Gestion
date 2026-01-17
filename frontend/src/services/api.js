@@ -64,3 +64,9 @@ export const deleteUser = (id) => api.delete(`users/${id}/`)
 export const getGenres = () => api.get('genero/')
 export const getGenre = (id) => api.get(`genero/${id}/`)
 export const newGenre = (data) => api.post('genero/', data)
+
+//Endpoints para prestamos
+export const getLoans = () => api.get('prestamo/')
+export const getLoan = (id) => api.get(`prestamo/${id}/`)
+export const newLoan = (data) => api.post('prestamo/', data)
+export const updatLoan = (id, data) => api.put(`prestamo/${id}/`, data)

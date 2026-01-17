@@ -72,6 +72,12 @@ function BookInfoSection({ info }) {
                     <span className="text-gray-900">{info.isbn}</span>
                 </p>
 
+                {/* Cantidad */}
+                <p className="flex items-center">
+                    <span className="font-semibold text-gray-600 w-24">Cantidad:</span>
+                    <span className="text-gray-900">{info.cantidad}</span>
+                </p>
+
                 {/* Descripción - Separada del resto para más espacio */}
                 <div className="pt-2">
                     <p className="font-semibold text-gray-600 mb-1">Descripción:</p>

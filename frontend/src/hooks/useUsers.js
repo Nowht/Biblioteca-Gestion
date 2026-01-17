@@ -41,7 +41,7 @@ export const useUpdateUser = () => {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: ({ id, data }) => updateUser(id,data),
+        mutationFn: ({ id, data }) => updateUser(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['users'] })
             toast.success("¡El Usuario se ha actualizado exitosamente!")
@@ -55,16 +55,8 @@ export const useDeleteUser = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (id) => deleteUser(id),
-        onSuccess: (data, variables) => {
-            const deletedId = variables
-            // Remueve el cache específica del usuario eliminado
-            queryClient.removeQueries({ queryKey: ['users', deletedId] })
-            
-            // Actualiza la lista de usuarios sin hacer la peticion a la api
-            queryClient.setQueryData(['users'], (old) => {
-                if(!old) return []
-                return Array.isArray(old) ? old.filter((u)=>u.id !== deletedId) : old
-            })
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['users'] })
             toast.success("¡Usuario eliminado con exito!")
         }
     })

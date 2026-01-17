@@ -31,7 +31,7 @@ function EditUserModal({ userdata, onClickClose }) {
     const onSubmit = (data) => {
         const finaldata = ({
             ...data,
-            is_staff: !!data.is_staff,
+            is_staff: data.is_staff === "true",
         })
 
         if (!finaldata.password || finaldata.password.trim() === "") {
@@ -39,7 +39,6 @@ function EditUserModal({ userdata, onClickClose }) {
         }
 
         mutate({ id, data: finaldata })
-
         onClickClose()
     }
 
