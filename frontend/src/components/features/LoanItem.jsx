@@ -2,10 +2,11 @@ import { useContext } from "react";
 
 import { AuthContext } from "../../context/AuthContext";
 
-function LoanItem({ 
+import { useUpdateLoan } from "../../hooks/useLoans";
+
+function LoanItem({
     loanInfo,
-    onAction1, // Por ejemplo: Renovar o Editar
-    onAction2  // Por ejemplo: Devolver o Eliminar
+    renewmodal,
 }) {
 
     const { user } = useContext(AuthContext)
@@ -16,8 +17,27 @@ function LoanItem({
     const aTiempo = fechaFin < fechaHoy
 
     const isHistory = loanInfo.devuelto === "history";
-    const borderColors = isHistory ? "border-gray-400" : ( aTiempo ? "border-red-500" : "border-green-500" );
+    const borderColors = isHistory ? "border-gray-400" : (aTiempo ? "border-red-500" : "border-green-500");
     const opacityStyle = isHistory ? "opacity-75 grayscale-[0.5]" : "opacity-100";
+
+    const { mutate: devolver } = useUpdateLoan()
+
+    const handleReturn = (info) => {
+
+        const hoy = new Date()
+        const fechaFormateada = hoy.toISOString().split('T')[0]
+
+        const finalData = {
+            ...info,
+            fecha_entregado_real: fechaFormateada,
+            devuelto: true
+        }
+
+        devolver({
+            id: finalData.id,
+            data: finalData
+        })
+    }
 
     return (
         <div className={`bg-white border-l-4 ${borderColors} ${opacityStyle} shadow-sm rounded-r-lg p-4 flex flex-col md:flex-row justify-between items-center gap-4 transition-all`}>
@@ -27,10 +47,10 @@ function LoanItem({
                 </div>
                 <div className="flex-1">
                     <h3 className="font-bold text-gray-800">{loanInfo.libro_detalle}</h3>
-                    {user?.isStaff &&(
+                    {user?.isStaff && (
                         <p className="text-sm text-gray-500">Usuario: {loanInfo.usuario_nombre}</p>
                     )}
-                    { aTiempo &&<span className="bg-red-500 text-white py-1 px-3 rounded-full text-xs font-bold" >Devolucion Tardía</span>}
+                    {aTiempo && <span className="bg-red-500 text-white py-1 px-3 rounded-full text-xs font-bold" >Devolucion Tardía</span>}
                     <div className="grid grid-cols-2 gap-2 mt-2 text-xs md:text-sm">
                         <span className="flex flex-col">
                             <strong className="text-gray-400 uppercase text-xs">Salida</strong>
@@ -48,13 +68,13 @@ function LoanItem({
             {user?.isStaff && !loanInfo.devuelto && (
                 <div className="flex gap-2 w-full md:w-auto">
                     <button
-                        onClick={onAction1}
+                        onClick={renewmodal}
                         className="flex-1 md:flex-none bg-blue-100 text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-blue-200 transition-colors"
                     >
                         Renovar
                     </button>
                     <button
-                        onClick={onAction2}
+                        onClick={() => handleReturn(loanInfo)}
                         className="flex-1 md:flex-none bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors"
                     >
                         Devolver

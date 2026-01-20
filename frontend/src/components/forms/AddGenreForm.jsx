@@ -14,13 +14,7 @@ function AddGenreForm() {
 
     const onSubmit = (data) => {
         mutate(data, {
-            onSucces: () => {
-                toast.success("Genero creado con exito")
-                reset()
-            },
-            onError: () => {
-                toast.error("Error al crear el genero")
-            } 
+            onSucces: () => reset()
         })
     }
 

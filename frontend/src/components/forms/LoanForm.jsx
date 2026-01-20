@@ -35,7 +35,6 @@ function LoanForm() {
 
         mutate(data, {
             onSuccess: () => reset(),
-            onError: console.log(data)
         })
     }
 

@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query"
-import { getLoans, newLoan } from "../services/api"
+import { getLoans, newLoan, updatLoan, renewLoan } from "../services/api"
 
 import { toast } from "react-hot-toast"
 
@@ -23,7 +23,28 @@ export const useCreateLoan = () => {
             querClient.invalidateQueries({ queryKey: ['prestamos'] })
             navigate('/dashboard/loans')
             toast.success("¡Prestamo creado con exito!")
-        }  
+        },
+        onError: (error) => toast.error("Error: " + error.response?.data)
+    })
+
+}
+
+export const useUpdateLoan = (isRenewal=false) => {
+    const querClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: ({id, data}) => isRenewal ? renewLoan(id,data) : updatLoan(id,data),
+        onSuccess: () => {
+            querClient.invalidateQueries({ queryKey: ['prestamos'] })
+            querClient.invalidateQueries({ queryKey: ['books'] })
+
+            const message = isRenewal ? "¡Prestamo Renovado!" : "¡Prestamo Actualizado!"
+
+            toast.success(message)
+        },
+        onError: (error) => {
+            toast.error(error.response?.data?.error || "Error al procesar la operación")
+        }
     })
 
 }
