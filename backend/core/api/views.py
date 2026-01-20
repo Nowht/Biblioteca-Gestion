@@ -1,4 +1,5 @@
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, serializers
+from django.db import transaction
 from django.db.models import Count
 from django.db.models.functions import TruncDate
 from rest_framework.views import APIView
@@ -51,6 +52,35 @@ class PrestamoViewSet(viewsets.ModelViewSet):
     queryset = Prestamo.objects.all()
     serializer_class = PrestamoSerializer
 
+    def perform_create(self, serializer):
+
+        book = serializer.validated_data['libro']
+
+        with transaction.atomic():
+            if book.cantidad > 0:
+                book.cantidad -= 1
+                book.save()
+
+                serializer.save()
+            else:
+                raise serializers.ValidationError(
+                    "No hay ejemplares disponibles de este libro"
+                )
+
+    def perform_update(self, serializer):
+
+        instancia_previa = self.get_object()
+        estado_anterior = instancia_previa.devuelto
+
+        prestamo_actualizado = serializer.save()
+        nuevo_estado = prestamo_actualizado.devuelto
+
+        if not estado_anterior and nuevo_estado:
+            with transaction.atomic():
+                book = prestamo_actualizado.libro
+                book.cantidad += 1
+                book.save()
+        
     # def get_queryset(self):
     #     user = self.request.user
     #     if user.is_staff:
