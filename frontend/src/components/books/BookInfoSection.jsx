@@ -11,16 +11,12 @@ import { Pencil, Trash2 } from "lucide-react";
 
 import { useState, useContext } from "react";
 
-import { useGenre } from "../../hooks/useGenres";
-
 import { useDeleteBook } from "../../hooks/useBooks";
 
 function BookInfoSection({ info }) {
 
     const [selectedContent, setSelectedContent] = useState(null);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-
-    const { data: genero, isLoading } = useGenre(info?.genero)
 
     const deleteBookMutation = useDeleteBook()
 
@@ -91,7 +87,7 @@ function BookInfoSection({ info }) {
                     <span className="font-semibold text-gray-600 w-24">Género:</span>
                     {/* Insignia de Género */}
                     <span className="px-3 py-1 bg-indigo-500 text-white text-xs font-semibold rounded-full shadow-md md:hover:bg-indigo-600 transition">
-                        {info.genero ? (isLoading ? "Cargando..." : genero?.nombre) : "Sin genero"}
+                        {info.genero_nombre ? info.genero_nombre : "Sin genero"}
                     </span>
                 </p>
             </div>

@@ -10,13 +10,11 @@ import UserItems from "../components/features/UserItems"
 
 import { Book, Users, HandHelping, Calendar } from "lucide-react"
 
-import { useContext, useState, useEffect } from "react"
+import { useContext } from "react"
 
 import { AuthContext } from "../context/AuthContext.jsx"
 
-import { getDashboardStats } from "../services/api.js"
-
-import { useStats, useChartStats } from "../hooks/useStats.js"
+import { useStats, useChartStats, useRecentStats } from "../hooks/useStats.js"
 
 function DashboardPage() {
 
@@ -25,6 +23,8 @@ function DashboardPage() {
   const { user } = useContext(AuthContext)
 
   const { data: chartstats, isLoading: cargando } = useChartStats()
+
+  const { data: recent, isLoading: cargando_reciente } = useRecentStats()
 
   return (
     <>
@@ -57,7 +57,7 @@ function DashboardPage() {
         <h2 className="text-2xl font-bold text-gray-500 mb-4">Actividad Reciente</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-          <div className="bg-white shadow-lg rounded-lg p-6 h-74">
+          <div className="bg-white shadow-lg rounded-lg p-6 h-80 flex flex-col">
 
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold text-gray-700">Últimos Usuarios</h3>
@@ -68,14 +68,15 @@ function DashboardPage() {
 
             <div className="flex-1 overflow-y-auto">
               <ListLayout>
-                <UserItems />
-                <UserItems />
+                {recent && (recent.usuarios_recientes.map((i) => (
+                  <UserItems name={i.username} key={i.id} date={i.date_joined} />
+                )))}
               </ListLayout>
             </div>
 
           </div>
 
-          <div className="bg-white shadow-lg rounded-lg p-6 h-74">
+          <div className="bg-white shadow-lg rounded-lg p-6 h-80 flex flex-col">
 
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold text-gray-700">Ultimos Prestamos</h3>
@@ -86,7 +87,9 @@ function DashboardPage() {
 
             <div className="flex-1 overflow-y-auto">
               <ListLayout>
-                <RecentLoansList />
+                {recent && (recent.prestamos_recientes.map((p) => (
+                  <RecentLoansList key={p.id} titulo={p.libro} Devuelto={p.devuelto} />
+                )))}
               </ListLayout>
             </div>
 

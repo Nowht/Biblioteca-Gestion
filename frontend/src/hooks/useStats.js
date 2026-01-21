@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getDashboardStats, getChartStats } from "../services/api";
+import { getDashboardStats, getChartStats, getRecentStats } from "../services/api";
 
 export const useStats = () => {
     return useQuery({
@@ -30,6 +30,15 @@ export const useChartStats = () => {
             }
 
         },
+        staleTime: 5 * 60 * 1000
+    })
+}
+
+export const useRecentStats = () => {
+    return useQuery({
+        queryKey: ['stats', 'recent'],
+        queryFn: getRecentStats,
+        select: (response) => response.data,
         staleTime: 5 * 60 * 1000
     })
 }

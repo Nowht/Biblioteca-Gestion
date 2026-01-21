@@ -122,3 +122,29 @@ class GraficoStatsView(APIView):
             "prestamos": list(prestamos_data),
             "usuarios": list(ususarios_data),
         })
+    
+class RecentStatsView(APIView):
+
+    def get(self, request):
+
+        recent_users = (
+            User.objects.order_by('-date_joined')[:5]
+            .values('id', 'username', 'date_joined')
+        )
+
+        recent_loans = (
+            Prestamo.objects.select_related('libro', 'usuario')
+            .order_by('-id')[:5]
+        )
+
+        loans_recent_data = [{
+            "id": p.id,
+            "libro": p.libro.titulo,
+            "usuario": p.usuario.username,
+            "devuelto": p.devuelto
+        } for p in recent_loans]
+
+        return Response({
+            "usuarios_recientes": list(recent_users),
+            "prestamos_recientes": loans_recent_data
+        })

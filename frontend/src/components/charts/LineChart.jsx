@@ -11,7 +11,7 @@ export const LineChart = ({ labels, dataValues, labelTitle, color='rgb(75, 192, 
   }
 
   const data = {
-    labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado", "Domingo"],
+    labels: labels,
     datasets: [
       {
         label: labelTitle,

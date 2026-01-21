@@ -52,6 +52,7 @@ export const logIn = (data) => api.post('token/', data)
 // Endpoints para dashboard
 export const getDashboardStats = () => api.get('dashboard-stats/')
 export const getChartStats = () => api.get('chart-stats/')
+export const getRecentStats = () => api.get('recent-stats/')
 
 // Endpoints para usuarios
 export const getUsers = () => api.get('users/')

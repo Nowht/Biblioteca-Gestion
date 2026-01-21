@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
-from core.api.views import LibroViewSet, GeneroViewSet, PrestamoViewSet, UserViewSet,DashBoardStatsView, GraficoStatsView
+from core.api.views import LibroViewSet, GeneroViewSet, PrestamoViewSet, UserViewSet,DashBoardStatsView, GraficoStatsView, RecentStatsView
 
 router = DefaultRouter()
 router.register('users', UserViewSet, basename='users')
@@ -13,6 +13,7 @@ urlpatterns = [
     # Registramos la APIView manualmente usando .as_view()
     path('dashboard-stats/', DashBoardStatsView.as_view(), name='dashboard-stats'),
     path('chart-stats/', GraficoStatsView.as_view(), name='chart-stats'),
+    path('recent-stats/', RecentStatsView.as_view(), name='recent-stats')
 ]
 
 # Sumamos las rutas del router a nuestra lista de urlpatterns
