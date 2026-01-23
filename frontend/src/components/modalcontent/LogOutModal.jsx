@@ -1,6 +1,12 @@
 import { LogOut } from "lucide-react"
 
-function LogOutModal({onCancel}) {
+function LogOutModal({ onCancel, onConfirmLogout }) {
+
+    const handleLogout = () => {
+        onConfirmLogout()
+        onCancel()
+    }
+
     return (
         <div className="p-6 text-center">
             {/* Icono de advertencia */}
@@ -25,7 +31,7 @@ function LogOutModal({onCancel}) {
                     Cancelar
                 </button>
                 <button
-                    //onClick={handleLogout} // Función real de cierre de sesión
+                    onClick={handleLogout}
                     className="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 shadow-md shadow-red-200 transition-colors order-1 sm:order-2"
                 >
                     Sí, cerrar sesión

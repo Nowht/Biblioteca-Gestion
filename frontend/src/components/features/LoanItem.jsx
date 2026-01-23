@@ -16,7 +16,7 @@ function LoanItem({
 
     const aTiempo = fechaFin < fechaHoy
 
-    const isHistory = loanInfo.devuelto === "history";
+    const isHistory = loanInfo.devuelto === true;
     const borderColors = isHistory ? "border-gray-400" : (aTiempo ? "border-red-500" : "border-green-500");
     const opacityStyle = isHistory ? "opacity-75 grayscale-[0.5]" : "opacity-100";
 

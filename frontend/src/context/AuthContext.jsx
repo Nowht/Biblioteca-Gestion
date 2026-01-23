@@ -13,24 +13,26 @@ export const AuthProvider = ({children}) => {
 
     // Funciona una vez al iniciar el componente
     useEffect( () => {
+      const id = localStorage.getItem("id")
       const token = localStorage.getItem("access")
       const username = localStorage.getItem("username")
       const isStaff = localStorage.getItem("is_staff") === "true"
 
       if (token){
-        setUser({username, isStaff})
+        setUser({username, isStaff, id})
       }
       setLoading(false)
     },[])
 
     // Funcion para inicar sesion
-    const login = ({access, username, is_staff, refresh}) => {
+    const login = ({access, username, is_staff, refresh, id}) => {
       localStorage.setItem("access", access)
       localStorage.setItem("username", username)
       localStorage.setItem("is_staff", is_staff)
       localStorage.setItem("refresh", refresh)
+      localStorage.setItem("id", id)
 
-      setUser({username: username, isStaff: is_staff === true})
+      setUser({username: username, isStaff: is_staff === true, id: id})
     }
 
     // Funcion para cerrar sesion

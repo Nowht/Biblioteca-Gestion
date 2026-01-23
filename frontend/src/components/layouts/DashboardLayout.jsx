@@ -97,7 +97,7 @@ function DashboardLayout({ children }) {
           <div className="flex-1">
           <Toaster position="top-right" reverseOrder={false} /> 
             <Modal isOpen={isLogOutOpen} onClose={()=>setIsLogOutOpen(false)} >
-              <LogOutModal onCancel={()=>setIsLogOutOpen(false)} />
+              <LogOutModal onCancel={()=>setIsLogOutOpen(false)} onConfirmLogout={logout}  />
             </Modal>
 
             {children}

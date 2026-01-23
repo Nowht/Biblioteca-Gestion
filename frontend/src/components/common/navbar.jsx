@@ -1,9 +1,7 @@
 import Button from "../ui/Button";
 import ButtonLink from "../ui/ButtonLink";
 
-import { useState, useContext } from "react";
-
-import { AuthContext } from "../../context/AuthContext"
+import { useState } from "react";
 
 import { Menu, X, LogOut } from "lucide-react";
 
@@ -12,14 +10,11 @@ const menuLinks = [
     { label: "Contacto", to: "/contact", Key: "contact" },
 ]
 
-function navbar() {
-
-    const { user, logout } = useContext(AuthContext)
+function navbar({ user, isAdmin = false, LogOutAction }) {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const isLogedIn = user !== null;
-    const isAdmin = user?.isStaff;
+    const isLogedIn = user !== undefined || null;
 
     return (
         // Agregamos relative para controlar el despliegue del menú móvil
@@ -52,10 +47,10 @@ function navbar() {
                         {isLogedIn ? (
                             <div className="flex items-center gap-3">
                                 <div className="flex flex-col text-right">
-                                    <span className="text-sm font-bold text-gray-800 leading-none">{user.username}</span>
-                                    <span className="text-xs text-gray-500 uppercase tracking-wide">{user.isStaff ? "Administrador" : "Usuario"}</span>
+                                    <span className="text-sm font-bold text-gray-800 leading-none">{user}</span>
+                                    <span className="text-xs text-gray-500 uppercase tracking-wide">{isAdmin ? "Administrador" : "Usuario"}</span>
                                 </div>
-                                <Button variant="danger" onFunc={logout}>
+                                <Button variant="danger" onFunc={LogOutAction}>
                                     <LogOut size={20} />
                                 </Button>
                             </div>
@@ -89,10 +84,10 @@ function navbar() {
                     {isLogedIn ? (
                         <div className="flex items-center justify-around">
                             <div className="flex flex-col text-start">
-                                <span className="text-sm font-bold text-gray-800 leading-none">{user.username}</span>
-                                <span className="text-xs text-gray-500 uppercase tracking-wide">{user.isStaff ? "Administrador" : "Usuario"}</span>
+                                <span className="text-sm font-bold text-gray-800 leading-none">{user}</span>
+                                <span className="text-xs text-gray-500 uppercase tracking-wide">{isAdmin ? "Administrador" : "Usuario"}</span>
                             </div>
-                            <Button variant="danger" onFunc={logout}>
+                            <Button variant="danger" onFunc={LogOutAction}>
                                 <LogOut size={20} />
                             </Button>
                         </div>

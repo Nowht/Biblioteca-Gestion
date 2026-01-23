@@ -9,6 +9,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
 
         # Añadimos datos personalizados al TOKEN (se guardan dentro del JWT)
+        token['id'] = user.id
         token['username'] = user.username
         token['is_staff'] = user.is_staff
         return token
@@ -17,6 +18,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
         
         # Añadimos datos personalizados a la RESPUESTA JSON (fácil acceso para React)
+        data['id'] = self.user.id
         data['is_staff'] = self.user.is_staff
         data['username'] = self.user.username
         return data

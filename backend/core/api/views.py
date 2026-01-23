@@ -49,7 +49,6 @@ class GeneroViewSet(viewsets.ModelViewSet):
 
 class PrestamoViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
-    queryset = Prestamo.objects.all()
     serializer_class = PrestamoSerializer
 
     def perform_create(self, serializer):
@@ -81,13 +80,13 @@ class PrestamoViewSet(viewsets.ModelViewSet):
                 book.cantidad += 1
                 book.save()
         
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     if user.is_staff:
-    #         # El admin ve todos los préstamos de la biblioteca
-    #         return Prestamo.objects.all()
-    #     # El usuario normal SOLO ve sus propios préstamos
-    #     return Prestamo.objects.filter(usuario=user)
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            # El admin ve todos los préstamos de la biblioteca
+            return Prestamo.objects.all()
+        # El usuario normal SOLO ve sus propios préstamos
+        return Prestamo.objects.filter(usuario=user)
 
 # Vista para las estadisticas del dashboard
 class DashBoardStatsView(APIView):
