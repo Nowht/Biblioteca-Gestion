@@ -13,11 +13,19 @@ import { useUsers, useDeleteUser } from "../hooks/useUsers"
 
 function UsersAdminPage() {
 
-    const { data: users, isLoading, isError } = useUsers()
+    // Busqueda 
+    const [ serachquery, setSearchQuery ] = useState("")
+
+    // Cargador de usuarios
+    const { data: users, isLoading, isError } = useUsers(serachquery)
+    
+    // Metodo para eliminar usuarios
     const deleteUserMutation = useDeleteUser()
 
+    // Usuario elegido 
     const [selectedUser, setSelectedUser] = useState(null);
 
+    // Manejador de modals
     const [isDetailOpen, setIsDetailOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -38,7 +46,7 @@ function UsersAdminPage() {
     }
 
     return (
-        <SectionHero title="Administración de Usuarios" paragraph="Gestiona y Crea Usuarios" createTo="/dashboard/users/add">
+        <SectionHero title="Administración de Usuarios" paragraph="Gestiona y Crea Usuarios" createTo="/dashboard/users/add" onSearch={setSearchQuery}>
             <div className="h-full overflow-y-auto pr-2">
                 <ListLayout>
                     {isLoading && <p>Cargando usuarios...</p>}

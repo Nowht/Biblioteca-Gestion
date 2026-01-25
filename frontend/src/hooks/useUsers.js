@@ -16,10 +16,10 @@ export const useCreateUser = () => {
 
 }
 
-export const useUsers = () => {
+export const useUsers = (data) => {
     return useQuery({
-        queryKey: ['users'],
-        queryFn: getUsers,
+        queryKey: ['users', data],
+        queryFn: () => getUsers(data) ,
         select: (response) => response.data.map(user => ({
             ...user,
             date_joined: new Date(user.date_joined).toLocaleDateString('es-ES')

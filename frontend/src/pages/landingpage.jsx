@@ -1,12 +1,16 @@
 import Hero from '../components/ui/hero.jsx'
 import BookCatalog from '../components/layouts/BookCatalog.jsx'
 
+import { useState } from 'react'
+
 function landingpage() {
+
+    const [searchQuery, setSearchQuery] = useState("")
     return (
-        <div>
-            <Hero></Hero>
-            <BookCatalog to="/book"></BookCatalog>
-        </div>
+        <>
+            <Hero onSearch={setSearchQuery} />
+            <BookCatalog to="/book" query={searchQuery} />
+        </>
     )
 }
 

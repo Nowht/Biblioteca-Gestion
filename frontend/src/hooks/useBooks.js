@@ -21,10 +21,10 @@ export const useCreateBook = () => {
     })
 }
 
-export const useBooks = () => {
+export const useBooks = (data) => {
     return useQuery({
-        queryKey: ['books'],
-        queryFn: getBooks,
+        queryKey: ['books', data],
+        queryFn: () => getBooks(data),
         select: (response) => response.data
     })
 }

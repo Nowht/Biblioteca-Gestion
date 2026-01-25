@@ -5,10 +5,10 @@ import { toast } from "react-hot-toast"
 
 import { useNavigate } from "react-router-dom"
 
-export const useLoans = () => {
+export const useLoans = (data) => {
     return useQuery({
-        queryKey: ['prestamos'],
-        queryFn: getLoans,
+        queryKey: ['prestamos', data],
+        queryFn: () => getLoans(data),
         select: (response) => response.data
     })
 }

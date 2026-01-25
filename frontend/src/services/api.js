@@ -40,7 +40,7 @@ api.interceptors.response.use(
 )
 
 // Endpoints de libros
-export const getBooks = () => api.get('libro/')
+export const getBooks = (data) => api.get(`libro/?search=${data}`)
 export const getBook = (id) => api.get(`libro/${id}/`)
 export const newBook = (data) => api.post('libro/', data)
 export const updateBook = (id, data) => api.put(`libro/${id}/`, data)
@@ -55,7 +55,7 @@ export const getChartStats = () => api.get('chart-stats/')
 export const getRecentStats = () => api.get('recent-stats/')
 
 // Endpoints para usuarios
-export const getUsers = () => api.get('users/')
+export const getUsers = (data) => api.get(`users/?search=${data}`)
 export const getUser = (id) => api.get(`users/${id}/`)
 export const newUser = (data) => api.post('users/', data)
 export const updateUser = (id, data) => api.put(`users/${id}/`, data)
@@ -67,7 +67,7 @@ export const getGenre = (id) => api.get(`genero/${id}/`)
 export const newGenre = (data) => api.post('genero/', data)
 
 //Endpoints para prestamos
-export const getLoans = () => api.get('prestamo/')
+export const getLoans = (data) => api.get(`prestamo/?search=${data}`)
 export const getLoan = (id) => api.get(`prestamo/${id}/`)
 export const newLoan = (data) => api.post('prestamo/', data)
 export const updatLoan = (id, data) => api.put(`prestamo/${id}/`, data)

@@ -8,22 +8,22 @@ import { useState } from "react"
 import { useLoans } from "../hooks/useLoans"
 
 function LoansAdminPage() {
-
-  const { data: loansdata, isLoading, isError, error } = useLoans()
-
+  const [searchquery, setSearchQuery] = useState("")
   const [isUpdateOpen, setIsUpdateOpen] = useState(false)
   const [loandata, setLoanData] = useState([])
 
+  const { data: loansdata, isLoading, isError, error } = useLoans(searchquery)
+
   const renewmodal = (data) => {
     setLoanData({
-      id: data.id, 
+      id: data.id,
       fecha_devolucion_esperada: data.fecha_devolucion_esperada
     })
     setIsUpdateOpen(true)
   }
 
   return (
-    <SectionHero title="Administración de Préstamos" paragraph="Gestiona los préstamos de la biblioteca." createTo="/dashboard/loans/add">
+    <SectionHero title="Administración de Préstamos" paragraph="Gestiona los préstamos de la biblioteca." createTo="/dashboard/loans/add" onSearch={setSearchQuery}>
 
       {isLoading && (<div>Cargando Prestamos...</div>)}
       {isError && (<div>Error: {error.message}</div>)}

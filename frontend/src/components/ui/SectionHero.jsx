@@ -4,14 +4,15 @@ import ButtonLink from "./ButtonLink"
 
 import { Plus, Trash2 } from "lucide-react"
 
-function SectionHero({ title, paragraph, children, createTo, deleteAlert }) {
+function SectionHero({ title, paragraph, children, createTo, deleteAlert, onSearch }) {
+
     return (
         <section className="w-full md:px-8 flex flex-col h-full overscroll-contain md:h-full">
             <header className="flex flex-col shrink-0">
                 <h1 className="text-3xl font-bold">{title}</h1>
                 <p className="text-gray-600 mb-4">{paragraph}</p>
                 <div className="mb-4 flex flex-col md:flex-row justify-between">
-                    <SearchBar />
+                    <SearchBar onSearch={onSearch} />
                     <div className="flex space-x-2 mt-3 justify-center md:my-0">
                         {deleteAlert && (
                             <Button variant="danger">

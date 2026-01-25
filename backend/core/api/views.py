@@ -1,4 +1,4 @@
-from rest_framework import viewsets, serializers
+from rest_framework import viewsets, serializers, filters
 from django.db import transaction
 from django.db.models import Count
 from django.db.models.functions import TruncDate
@@ -27,6 +27,9 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
     queryset = User.objects.all()
 
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['id', 'username']
+
     def get_serializer_class(self):
         # Cuando se hace un POST (crear usuario)
         if self.action == 'create':
@@ -42,6 +45,9 @@ class LibroViewSet(viewsets.ModelViewSet):
     queryset = Libro.objects.all()
     serializer_class = LibroSerializer
 
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['titulo', 'autor']
+
 class GeneroViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
     queryset = Genero.objects.all()
@@ -50,6 +56,9 @@ class GeneroViewSet(viewsets.ModelViewSet):
 class PrestamoViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
     serializer_class = PrestamoSerializer
+
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['usuario__username', 'libro__titulo']
 
     def perform_create(self, serializer):
 
