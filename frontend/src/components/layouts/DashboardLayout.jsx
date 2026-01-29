@@ -37,7 +37,7 @@ function DashboardLayout({ children }) {
           <h1 className="text-2xl font-bold text-center">Admin Panel</h1>
           <div className="my-4 flex items-center justify-between gap-3 p-2 bg-gray-700/50 rounded-lg">
             <div className="flex gap-3 items-center">
-              <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-xs">
+              <div className="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center text-xs">
                 <UserRound size={20} />
               </div>
               <div className="overflow-hidden">

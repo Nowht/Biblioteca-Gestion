@@ -8,7 +8,7 @@ function UserItemAdmin({ name = "usuario", role = "user/admin", date = "fecha", 
             <input type="checkbox" className="w-4 h-4" />
             <button type="button" onClick={onViewDetail} className="flex-1 flex items-center justify-between text-left">
                 <div className="flex flex-col gap-0.5">
-                    <span className="text-sm font-bold text-gray-900 group-md:hover:text-blue-600 transition-colors">{name}</span>
+                    <span className="text-sm font-bold text-gray-900 group-md:hover:text-brand-600 transition-colors">{name}</span>
                     <span className="text-xs text-gray-500 font-medium px-2 py-0.5 bg-gray-100 rounded-full w-fit">{role}</span>
                 </div>
             </button>

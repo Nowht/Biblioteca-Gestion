@@ -49,7 +49,7 @@ function LoginPage() {
   return (
     <div className="w-full max-w-md mx-auto md:bg-gray-700 md:shadow-xl md:shadow-gray-500/50 md:rounded-xl p-8">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h2 className="text-2xl font-bold mb-6 text-center text-blue-500 md:text-white">Iniciar Sesión</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center text-brand-500 md:text-white">Iniciar Sesión</h2>
         <div className="grid gap-4 mb-6">
           <FormField
             label="Usuario"

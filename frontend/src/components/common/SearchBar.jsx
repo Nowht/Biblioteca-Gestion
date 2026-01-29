@@ -4,14 +4,6 @@ import { Search, X } from 'lucide-react'; // Librería de iconos
 function SearchBar({ onSearch, placeholdertext = "Buscar..." }){
 
   const [text, setText] = useState("")
-  // useEffect(() => {
-
-  //   const handler = setTimeout(() => {
-  //     onSearch(text)
-  //   }, 500)
-
-  //   return () => clearTimeout(handler)
-  // }, [text])
 
   const handleSubmit = (e) => {
     e.preventDefault()

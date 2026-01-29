@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+@theme {
+  /* Tus colores base */
+  --color-brand-dark: #070709;
+  --color-brand-light: #f9fafb;
+
+  /* Tu escala monocromática personalizada */
+  --color-brand-50: #f2f4f8;
+  --color-brand-100: #e5e9f1;
+  --color-brand-200: #cbd3e3;
+  --color-brand-300: #a6b2ce; /* Tu original secondary */
+  --color-brand-400: #8798c5; /* Tu original accent */
+  --color-brand-500: #6a7ba4; /* Tu original primary */
+  --color-brand-600: #58688e;
+  --color-brand-900: #070709;
+}

@@ -24,8 +24,8 @@ function navbar({ user, isAdmin = false, LogOutAction }) {
 
                 {/* LOGO */}
                 <a href="/" className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-blue-500 rounded-full"></div> {/* Placeholder de icono */}
-                    <h1 className="text-blue-500 font-bold text-xl md:text-2xl">Biblioteca</h1>
+                    <div className="w-8 h-8 bg-brand-600 rounded-full"></div> {/* Placeholder de icono */}
+                    <h1 className="text-brand-900 font-bold text-xl md:text-2xl">Biblioteca</h1>
                 </a>
 
                 {/* LINKS DESKTOP (Ocultos en móvil) */}
@@ -36,7 +36,7 @@ function navbar({ user, isAdmin = false, LogOutAction }) {
                             <ButtonLink variant="nav" to={link.to}>{link.label}</ButtonLink>
                         </li>
                     ))}
-                    { isLogedIn && <li><ButtonLink variant="nav" to="/loans">Mis Préstamos</ButtonLink></li> }
+                    { !isAdmin && isLogedIn && <li><ButtonLink variant="nav" to="/loans">Mis Préstamos</ButtonLink></li> }
                     {isAdmin && <li><ButtonLink variant="nav" to="/dashboard">Dashboard</ButtonLink></li>}
                 </ul>
 

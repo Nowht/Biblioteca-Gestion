@@ -14,16 +14,16 @@ function footer() {
         {/* Columna 2: Enlaces Rápidos */}
         <div className="flex flex-col space-y-2">
           <h3 className="text-white font-semibold mb-2">Navegación</h3>
-          <a href="/about" className="hover:text-blue-400 transition-colors">Sobre Nosotros</a>
-          <a href="/contact" className="hover:text-blue-400 transition-colors">Contacto</a>
-          <a href="/help" className="hover:text-blue-400 transition-colors">Ayuda / FAQ</a>
+          <a href="/about" className="hover:text-brand-400 transition-colors">Sobre Nosotros</a>
+          <a href="/contact" className="hover:text-brand-400 transition-colors">Contacto</a>
+          <a href="/help" className="hover:text-brand-400 transition-colors">Ayuda / FAQ</a>
         </div>
 
         {/* Columna 3: Info Local */}
         <div>
           <h3 className="text-white font-semibold mb-2">Ubicación y Horario</h3>
           <p className="text-sm">Av. Central #123, Ciudad</p>
-          <p className="text-sm mt-2 text-blue-400">Lun - Vie: 8:00 AM - 6:00 PM</p>
+          <p className="text-sm mt-2 text-brand-400">Lun - Vie: 8:00 AM - 6:00 PM</p>
         </div>
       </div>
 

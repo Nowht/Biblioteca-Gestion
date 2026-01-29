@@ -37,10 +37,10 @@ function DashboardPage() {
         {chartstats && (
           <>
             <div className="w-full h-70">
-              <LineChart labels={chartstats.usuarios.labels} dataValues={chartstats.usuarios.values} labelTitle="Usuarios recientes" color="blue" />
+              <LineChart labels={chartstats.usuarios.labels} dataValues={chartstats.usuarios.values} labelTitle="Usuarios recientes" color="rgb(106 123 164)" />
             </div>
             <div className="w-full h-70">
-              <LineChart labels={chartstats.prestamos.labels} dataValues={chartstats.prestamos.values} labelTitle="Prestamos recientes" color="green" />
+              <LineChart labels={chartstats.prestamos.labels} dataValues={chartstats.prestamos.values} labelTitle="Prestamos recientes" color="rgb(106 123 164)" />
             </div>
           </>
         )}
@@ -61,7 +61,7 @@ function DashboardPage() {
 
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold text-gray-700">Últimos Usuarios</h3>
-              <Link to="/dashboard/users" className="text-end text-sm font-medium text-indigo-600 md:hover:text-indigo-800 transition-colors">
+              <Link to="/dashboard/users" className="text-end text-sm font-medium text-brand-600 md:hover:text-brand-800 transition-colors">
                 Administrar Usuarios
               </Link>
             </div>
@@ -80,7 +80,7 @@ function DashboardPage() {
 
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold text-gray-700">Ultimos Prestamos</h3>
-              <Link to="/dashboard/loans" className="text-end text-sm font-medium text-indigo-600 md:hover:text-indigo-800 transition-colors">
+              <Link to="/dashboard/loans" className="text-end text-sm font-medium text-brand-600 md:hover:text-brand-800 transition-colors">
                 Administrar Préstamos
               </Link>
             </div>

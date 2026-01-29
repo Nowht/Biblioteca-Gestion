@@ -25,6 +25,14 @@ class Libro(models.Model):
     genero = models.ForeignKey(Genero, on_delete=models.SET_NULL, null=True)
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='disponible')
 
+    def save(self, *args, **kwargs):
+        if self.cantidad > 0:
+            self.estado = "disponible"
+        else:
+            self.estado = "prestado"
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.titulo
     

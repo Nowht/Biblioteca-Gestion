@@ -16,8 +16,8 @@ const FormField = forwardRef(({
     
     const [isVisible, setIsVisible] = useState(false);
 
-    const baseClass = "border bg-gray-50 border-gray-300 rounded px-3 py-2 w-full text-black focus:ring-2 focus:ring-blue-500 outline-none transition-all";
-    const checkboxStyle = "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 cursor-pointer";
+    const baseClass = "border bg-gray-50 border-gray-300 rounded px-3 py-2 w-full text-black focus:ring-2 focus:ring-brand-500 outline-none transition-all";
+    const checkboxStyle = "w-4 h-4 text-brand-600 bg-gray-100 border-gray-300 rounded focus:ring-brand-500 cursor-pointer";
     const labelStyle = "text-lg font-bold text-gray-700";
 
     // Componente para mostrar errores
@@ -106,7 +106,7 @@ const FormField = forwardRef(({
                     <button 
                         type="button" 
                         onClick={() => setIsVisible(!isVisible)} 
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-blue-600 transition-colors"
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-brand-600 transition-colors"
                     >
                         {isVisible ? <EyeOff size={20}/> : <Eye size={20}/>}
                     </button>

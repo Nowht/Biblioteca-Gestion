@@ -61,18 +61,16 @@ class PrestamoViewSet(viewsets.ModelViewSet):
     search_fields = ['usuario__username', 'libro__titulo']
 
     def perform_create(self, serializer):
-
         book = serializer.validated_data['libro']
 
         with transaction.atomic():
             if book.cantidad > 0:
                 book.cantidad -= 1
-                book.save()
-
+                book.save() 
                 serializer.save()
             else:
                 raise serializers.ValidationError(
-                    "No hay ejemplares disponibles de este libro"
+                    {"error": "No hay ejemplares disponibles."}
                 )
 
     def perform_update(self, serializer):
@@ -91,11 +89,19 @@ class PrestamoViewSet(viewsets.ModelViewSet):
         
     def get_queryset(self):
         user = self.request.user
+
         if user.is_staff:
-            # El admin ve todos los préstamos de la biblioteca
-            return Prestamo.objects.all()
-        # El usuario normal SOLO ve sus propios préstamos
-        return Prestamo.objects.filter(usuario=user)
+            queryset = Prestamo.objects.all()
+        else:
+            queryset = Prestamo.objects.filter(usuario=user)
+
+        devuelto = self.request.query_params.get('devuelto')
+
+        if devuelto is not None:
+            is_devuelto = devuelto.lower() == 'true'
+            queryset = queryset.filter(devuelto=is_devuelto)
+
+        return queryset
 
 # Vista para las estadisticas del dashboard
 class DashBoardStatsView(APIView):

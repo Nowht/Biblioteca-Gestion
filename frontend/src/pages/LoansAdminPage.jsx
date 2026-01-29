@@ -12,7 +12,7 @@ function LoansAdminPage() {
   const [isUpdateOpen, setIsUpdateOpen] = useState(false)
   const [loandata, setLoanData] = useState([])
 
-  const { data: loansdata, isLoading, isError, error } = useLoans(searchquery)
+  const { data: loansdata, isLoading, isError, error } = useLoans(searchquery, false)
 
   const renewmodal = (data) => {
     setLoanData({

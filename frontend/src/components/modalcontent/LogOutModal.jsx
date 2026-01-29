@@ -1,4 +1,5 @@
 import { LogOut } from "lucide-react"
+import Button from "../ui/Button"
 
 function LogOutModal({ onCancel, onConfirmLogout }) {
 
@@ -24,18 +25,12 @@ function LogOutModal({ onCancel, onConfirmLogout }) {
 
             {/* Botones de Acción */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <button
-                    onClick={onCancel} // Función para cerrar el modal sin hacer nada
-                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition-colors order-2 sm:order-1"
-                >
+                <Button onFunc={onCancel} variant="danger" >
                     Cancelar
-                </button>
-                <button
-                    onClick={handleLogout}
-                    className="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 shadow-md shadow-red-200 transition-colors order-1 sm:order-2"
-                >
+                </Button>
+                <Button onFunc={handleLogout} variant="primary">
                     Sí, cerrar sesión
-                </button>
+                </Button>
             </div>
         </div>
     )

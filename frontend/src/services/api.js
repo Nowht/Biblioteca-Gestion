@@ -67,7 +67,8 @@ export const getGenre = (id) => api.get(`genero/${id}/`)
 export const newGenre = (data) => api.post('genero/', data)
 
 //Endpoints para prestamos
-export const getLoans = (data) => api.get(`prestamo/?search=${data}`)
+export const getLoans = (search = "", isReturned = null) => api.get('prestamo/', 
+    { params: { search: search, devuelto: isReturned} })
 export const getLoan = (id) => api.get(`prestamo/${id}/`)
 export const newLoan = (data) => api.post('prestamo/', data)
 export const updatLoan = (id, data) => api.put(`prestamo/${id}/`, data)

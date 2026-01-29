@@ -41,7 +41,7 @@ function RenewLoanModal({ onCancel, dataofloan }) {
             <form onSubmit={handleSubmit(handleRenew)} className="space-y-4">
                 <FormField type="date" name="fecha_devolucion_esperada" {...register("fecha_devolucion_esperada", {required: "La fecha es requerida"})} error={errors.fecha_devolucion_esperada} />
                 <div className="flex gap-x-4">
-                    <Button variant="danger" onFunc={onCancel} disabled={isSubmitting} >Cancelar</Button>
+                    <Button variant="secondary" onFunc={onCancel} disabled={isSubmitting} >Cancelar</Button>
                     <Button variant="primary" type="submit" disabled={isSubmitting} >{isSubmitting ? "Actualizando..." : "Actualizar" }</Button>
                 </div>
             </form>

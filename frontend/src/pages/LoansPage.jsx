@@ -6,11 +6,15 @@ import LoanItem from "../components/features/LoanItem"
 import { History, Clock } from "lucide-react"
 
 import { useLoans } from "../hooks/useLoans"
-import { act, useMemo } from "react"
+import { useMemo } from "react"
+
+import { useState } from "react"
 
 function LoansPage() {
 
-    const { data, isLoading } = useLoans()
+    const [ searchquery, setSearchQuery ] = useState("")
+
+    const { data, isLoading } = useLoans(searchquery)
 
     const { activos, entregados } = useMemo(() => {
         if (!Array.isArray(data)) return { activos: [], entregados: [] }
@@ -28,7 +32,9 @@ function LoansPage() {
         <div className="px-8 py-4">
             <SectionHero
                 title="Mi Actividad"
-                paragraph="Consulta tus libros actuales y el historial de tus lecturas.">
+                paragraph="Consulta tus libros actuales y el historial de tus lecturas."
+                onSearch={setSearchQuery}
+                >
                 <div className="space-y-8">
                     {/* SECCIÓN ACTIVOS */}
                     <div>
@@ -41,7 +47,7 @@ function LoansPage() {
                                     activos.map((l) => (
                                         <LoanItem loanInfo={l} key={l.id} />
                                     ))) : (
-                                    <div className="p-4 bg-blue-50 text-blue-700 rounded-lg">No tienes préstamos activos en este momento.</div>
+                                    <div className="p-4 bg-brand-50 text-brand-700 rounded-lg">No tienes préstamos activos en este momento.</div>
                                 )}
                             </ListLayout>
                         </div>
@@ -50,7 +56,7 @@ function LoansPage() {
                     {/* SECCIÓN HISTORIAL */}
                     <div className="pt-6 border-t border-gray-200">
                         <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-                            <History size={20} className="text-blue-500" /> Historial Completo
+                            <History size={20} className="text-brand-500" /> Historial Completo
                         </h2>
                         <div className="grid gap-3">
                             <ListLayout>
@@ -59,7 +65,7 @@ function LoansPage() {
                                         <LoanItem loanInfo={l} key={l.id} />
                                     ))
                                 ) : (
-                                    <div className="p-4 bg-blue-50 text-blue-700 rounded-lg">No tienes historial de prestamos.</div>
+                                    <div className="p-4 bg-brand-50 text-brand-700 rounded-lg">No tienes historial de prestamos.</div>
                                 )}
                             </ListLayout>
                         </div>

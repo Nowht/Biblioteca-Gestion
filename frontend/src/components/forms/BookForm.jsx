@@ -72,7 +72,7 @@ function BookForm() {
                                 options={opcionesGeneros}
                                 {...register("genero", { required: "Este campo es requerido" })}
                             />
-                            <Button onFunc={() => setAddGenreModal(true)} variant="green" className="gap-2">
+                            <Button onFunc={() => setAddGenreModal(true)} variant="primary" className="gap-2">
                                 Agregar <Plus size={24} />
                             </Button>
                         </div>
@@ -102,7 +102,7 @@ function BookForm() {
 
                 {/* BOTONERA (Ocupa todo el ancho abajo) */}
                 <div className="lg:col-span-3 flex justify-center lg:justify-end gap-4 p-6">
-                    <ButtonLink to="/dashboard/books" variant="outline">Cancelar</ButtonLink>
+                    <ButtonLink to="/dashboard/books" variant="secondary">Cancelar</ButtonLink>
                     <Button type="submit" variant="primary">{isEditMode ? "Guardar Cambios" : "Crear Libro"}</Button>
                 </div>
             </form>

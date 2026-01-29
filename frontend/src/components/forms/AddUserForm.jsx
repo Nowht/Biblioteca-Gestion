@@ -39,7 +39,7 @@ function AddUserForm() {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="border border-gray-100 bg-white rounded-xl flex flex-col items-center p-8 shadow-sm">
 
-            <div className="h-32 w-32 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl font-bold">
+            <div className="h-32 w-32 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center text-xl font-bold">
                 <User size={100} />
             </div>
             <div className="flex flex-col items-center space-y-3">
@@ -49,7 +49,7 @@ function AddUserForm() {
             </div>
 
             <div className="flex justify-center gap-3 mt-6">
-                <ButtonLink to="/dashboard/users" variant="outline" className="text-md">Cancelar</ButtonLink>
+                <ButtonLink to="/dashboard/users" variant="secondary" className="text-md">Cancelar</ButtonLink>
                 <Button type="submit" variant="primary" className="text-md" disabled={isSubmitting}>
                     {isLoading ? "Creando..." : "Crear Usuario"}
                 </Button>

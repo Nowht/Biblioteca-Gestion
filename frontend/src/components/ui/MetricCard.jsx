@@ -4,7 +4,7 @@ function MetricCard({title, value, icon}) {
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
-          <p className="text-2xl font-bold text-blue-500">{value}</p>
+          <p className="text-2xl font-bold text-brand-500">{value}</p>
         </div>
         <div className="text-gray-500">
           {icon}

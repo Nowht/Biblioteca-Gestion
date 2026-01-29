@@ -1,15 +1,9 @@
 import BookCard from "../books/BookCard"
 import { useBooks } from "../../hooks/useBooks"
 
-import { useEffect } from "react"
-
 function BookCatalog({ to, query }) {
 
     const { data: books, isLoading, isError, error } = useBooks(query)
-    //Se define la consulta
-    // useEffect(() => {
-    //     const { data: books, isLoading, isError, error } = useBooks(query)
-    // }, [query])
 
     // TanStack Query maneja los estados
     if (isLoading) return <div>Cargando biblioteca...</div>

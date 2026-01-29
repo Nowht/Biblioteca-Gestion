@@ -45,7 +45,7 @@ function EditUserModal({ userdata, onClickClose }) {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-8">
             <div className="flex justify-center items-center gap-6">
-                <div className="h-16 w-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl font-bold">
+                <div className="h-16 w-16 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center text-xl font-bold">
                     <User size={50} />
                 </div>
                 <div className="grid gap-4">

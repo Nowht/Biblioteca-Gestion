@@ -8,9 +8,9 @@ function AboutPage() {
             </section>
 
             <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-blue-50 p-6 rounded-2xl">
-                    <h3 className="text-xl font-bold text-blue-800 mb-2">Nuestra Misión</h3>
-                    <p className="text-blue-900/70">Facilitar el control y préstamo de material bibliográfico de manera eficiente.</p>
+                <div className="bg-brand-50 p-6 rounded-2xl">
+                    <h3 className="text-xl font-bold text-brand-800 mb-2">Nuestra Misión</h3>
+                    <p className="text-brand-900/70">Facilitar el control y préstamo de material bibliográfico de manera eficiente.</p>
                 </div>
                 <div className="bg-green-50 p-6 rounded-2xl">
                     <h3 className="text-xl font-bold text-green-800 mb-2">El Objetivo</h3>

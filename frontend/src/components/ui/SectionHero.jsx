@@ -4,7 +4,7 @@ import ButtonLink from "./ButtonLink"
 
 import { Plus, Trash2 } from "lucide-react"
 
-function SectionHero({ title, paragraph, children, createTo, deleteAlert, onSearch }) {
+function SectionHero({ title, paragraph, children, createTo, deleteAlert, onSearch, additionalbtn }) {
 
     return (
         <section className="w-full md:px-8 flex flex-col h-full overscroll-contain md:h-full">
@@ -26,6 +26,8 @@ function SectionHero({ title, paragraph, children, createTo, deleteAlert, onSear
                                 <span className="text-base">Añadir</span>
                             </ButtonLink>
                         )}
+
+                        {additionalbtn}
 
                     </div>
                 </div>

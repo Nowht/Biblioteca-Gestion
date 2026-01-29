@@ -15,8 +15,8 @@ function LoanForm() {
 
     const { register, control, handleSubmit, formState: { errors }, reset } = useForm()
 
-    const { data: libros, isLoading: cargandoLibro } = useBooks()
-    const { data: usuario, isLoading: cargandoUsuario } = useUsers()
+    const { data: libros, isLoading: cargandoLibro } = useBooks("")
+    const { data: usuario, isLoading: cargandoUsuario } = useUsers("")
 
     const { mutate, isLoading } = useCreateLoan()
 
@@ -123,7 +123,7 @@ function LoanForm() {
             </div>
 
             <div className="md:col-span-2 flex justify-end gap-3 mt-4">
-                <ButtonLink to="/dashboard/loans" variant="outline">Cancelar</ButtonLink>
+                <ButtonLink to="/dashboard/loans" variant="secondary">Cancelar</ButtonLink>
                 <Button type="submit" variant="primary">Confirmar Préstamo</Button>
             </div>
         </form>
