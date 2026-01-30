@@ -74,7 +74,7 @@ function navbar({ user, isAdmin = false, LogOutAction }) {
                 <div className="absolute top-20 left-0 right-0 bg-white rounded-3xl shadow-2xl border border-gray-100 p-6 flex flex-col gap-4 md:hidden z-50 animate-in fade-in zoom-in duration-200">
 
                     {menuLinks.map((link) => (
-                        <ButtonLink variant="nav" to={link.to} OnClick={() => setIsOpen(false)}>{link.label}</ButtonLink>
+                        <ButtonLink variant="nav" to={link.to} OnClick={() => setIsOpen(false)} key={link.Key} >{link.label}</ButtonLink>
                     ))}
 
                     {isAdmin && (

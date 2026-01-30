@@ -18,7 +18,7 @@ function LoanItem({
     const aTiempo = fechaFin < fechaHoy
 
     const isHistory = loanInfo.devuelto === true;
-    const borderColors = isHistory ? "border-gray-400" : (aTiempo ? "border-orange-600" : "border-brand-500");
+    const borderColors = isHistory ? "border-gray-400" : (aTiempo ? "border-red-500" : "border-brand-500");
     const opacityStyle = isHistory ? "opacity-75 grayscale-[0.5]" : "opacity-100";
 
     const { mutate: devolver } = useUpdateLoan()
@@ -51,7 +51,7 @@ function LoanItem({
                     {user?.isStaff && (
                         <p className="text-sm text-gray-500">Usuario: {loanInfo.usuario_nombre}</p>
                     )}
-                    {aTiempo && <span className="bg-orange-50 text-orange-700 border border-orange-200 py-1 px-3 rounded-full text-xs font-bold" >Devolucion Tardía</span>}
+                    {aTiempo && <span className="bg-red-50 text-red-700 border border-red-200 py-1 px-3 rounded-full text-xs font-bold" >Devolucion Tardía</span>}
                     <div className="grid grid-cols-2 gap-2 mt-2 text-xs md:text-sm">
                         <span className="flex flex-col">
                             <strong className="text-gray-400 uppercase text-xs">Salida</strong>
@@ -67,7 +67,7 @@ function LoanItem({
 
             {/* Renderizado condicional de botones: Solo si es admin y no es historial */}
             {user?.isStaff && !loanInfo.devuelto && (
-                <div className="flex gap-2 w-full md:w-auto">
+                <div className="flex gap-2 w-full md:w-auto justify-center">
                     <Button onFunc={renewmodal} variant="secondary">
                         Renovar
                     </Button>
