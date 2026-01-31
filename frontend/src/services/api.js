@@ -13,6 +13,7 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
+// INTERCEPTOR DE RESPUESTA: Refresca el token de acceso si detecta error
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
@@ -65,6 +66,7 @@ export const deleteUser = (id) => api.delete(`users/${id}/`)
 export const getGenres = () => api.get('genero/')
 export const getGenre = (id) => api.get(`genero/${id}/`)
 export const newGenre = (data) => api.post('genero/', data)
+export const deleteGenre = (ids) => api.post('genero/bulk_delete/', {ids: ids}) 
 
 //Endpoints para prestamos
 export const getLoans = (search = "", isReturned = null) => api.get('prestamo/', 

@@ -1,15 +1,16 @@
-import { X } from "lucide-react"
+function GenreBadge({ nombre = "Sin Género", isSelected, onToggle }) {
 
-function GenreBadge({ nombre = "Genero", list = false }) {
+    const basestyle = "bg-brand-100 text-brand-600 border-brand-200"
+    const todelete = "bg-brand-200 text-brand-900 border-brand-200"
+
     return (
-        <div className="inline-flex items-center justify-around px-3 py-1 rounded-full bg-brand-100 text-brand-600 border border-brand-200 gap-2">
-            <span className="text font-medium truncate" title={nombre} >{nombre}</span>
-            {list && (
-                <button className="hover:bg-brand-200 p-0.5 rounded-full transition-colors text-brand-400 hover:text-brand-900 cursor-pointer">
-                    <X size={18} />
-                </button>
-            )}
+        <div
+            className={`inline-flex items-center justify-around px-3 py-1 rounded-full border gap-2 ${isSelected ? todelete : basestyle}`}
+            onClick={onToggle}
+        >
+            <span className="text font-medium text-sm truncate" title={nombre} >{nombre}</span>
         </div>
+
     )
 }
 

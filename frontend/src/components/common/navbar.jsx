@@ -36,7 +36,7 @@ function navbar({ user, isAdmin = false, LogOutAction }) {
                             <ButtonLink variant="nav" to={link.to}>{link.label}</ButtonLink>
                         </li>
                     ))}
-                    { !isAdmin && isLogedIn && <li><ButtonLink variant="nav" to="/loans">Mis Préstamos</ButtonLink></li> }
+                    {!isAdmin && isLogedIn && <li><ButtonLink variant="nav" to="/loans">Mis Préstamos</ButtonLink></li>}
                     {isAdmin && <li><ButtonLink variant="nav" to="/dashboard">Dashboard</ButtonLink></li>}
                 </ul>
 
@@ -76,6 +76,8 @@ function navbar({ user, isAdmin = false, LogOutAction }) {
                     {menuLinks.map((link) => (
                         <ButtonLink variant="nav" to={link.to} OnClick={() => setIsOpen(false)} key={link.Key} >{link.label}</ButtonLink>
                     ))}
+
+                    {!isAdmin && isLogedIn && <ButtonLink variant="nav" to="/loans" OnClick={() => setIsOpen(false) }>Mis Préstamos</ButtonLink>}
 
                     {isAdmin && (
                         <ButtonLink variant="nav" to="/dashboard" onClick={() => setIsOpen(false)} key="dashboard">Dashboard</ButtonLink>

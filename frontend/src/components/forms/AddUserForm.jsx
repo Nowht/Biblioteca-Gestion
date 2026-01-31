@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form"
 import { User } from "lucide-react"
 
 import { useCreateUser } from "../../hooks/useUsers"
-import { toast } from "react-hot-toast"
 
 function AddUserForm() {
 
@@ -23,16 +22,7 @@ function AddUserForm() {
         }
 
         mutate(finaldata, {
-            onSuccess: () => {
-                toast.success('¡Usuario creado correctamente!');
-                reset()
-            },
-            onError: (error) => {
-                const serverError = error.response?.data;
-                const message = serverError?.username?.[0] || serverError?.detail || "Intente de nuevo";
-
-                toast.error(message);
-            }
+            onSuccess: () => reset()
         })
     }
 

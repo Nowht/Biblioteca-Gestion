@@ -27,10 +27,7 @@ function BookInfoSection({ info }) {
         setSelectedContent(bookdata);
         setIsDeleteOpen(true)
     }
-
-    const esReservable = info.estado?.toLowerCase() === "disponible";
-    const textoBoton = esReservable ? "Reservar Libro" : "No disponible para reserva";
-
+        
     return (
         <section className="max-w-xl mx-auto p-6 bg-white shadow-xl rounded-xl border border-gray-100">
             {/* Título y disponibilidad - Usamos flex para poner la insignia al lado */}

@@ -8,14 +8,31 @@ import { Bookmark } from "lucide-react"
 
 import { useState } from "react"
 
-import { useGenres } from "../hooks/useGenres"
+import { useGenres, useDeleteGenre } from "../hooks/useGenres"
 
 function BookAdminPage() {
 
     const [searchquery, setSearchQuery] = useState("")
     const [isopen, setIsOpen] = useState(false)
+    const [selectedGenres, setSelectedGenres] = useState([])
 
     const { data, isLoading } = useGenres()
+
+    const { mutate } = useDeleteGenre()
+
+    const handleSelect = (genero) => {
+        setSelectedGenres((prev) =>
+            prev.includes(genero)
+                ? prev.filter(g => g !== genero)
+                : [...prev, genero]
+        )
+    }
+
+    const DeleteGenre = () => {
+        mutate(selectedGenres)
+        setSelectedGenres([])
+        setIsOpen(false)
+    }
 
     return (
         <SectionHero
@@ -32,8 +49,17 @@ function BookAdminPage() {
             </div>
             <Modal isOpen={isopen} onClose={() => setIsOpen(false)} title="Generos" >
                 <div className="grid grid-cols-2 gap-4">
-                    { data && ( data.map( (e) => ( <GenreBadge nombre={e.nombre} key={e.id} list={true} /> ) ) ) }
-                    <Button variant="primary" className="col-span-2">Cerrar</Button>
+                    {data && (data.map((e) => (
+                        <GenreBadge
+                            nombre={e.nombre}
+                            key={e.id}
+                            isSelected={selectedGenres.includes(e.id)}
+                            onToggle={() => handleSelect(e.id)}
+                        />)))}
+                    {selectedGenres.length > 0 ?
+                        (<Button variant="primary" className="col-span-2" onFunc={DeleteGenre} >Eliminar</Button>)
+                        : (<Button variant="secondary" className="col-span-2" onFunc={() => setIsOpen(false)} >Cerrar</Button>)
+                    }
                 </div>
             </Modal>
         </SectionHero>

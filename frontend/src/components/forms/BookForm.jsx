@@ -59,16 +59,17 @@ function BookForm() {
             <form onSubmit={handleSubmit(onSubmit)} className="border bg-white border-gray-300 rounded-xl grid grid-cols-1 lg:grid-cols-3 shadow-sm">
                 <div className="lg:col-span-2 space-y-6 p-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <FormField label="Título" name="title" type="text" {...register("titulo", { required: "Este campo es requerido" })} error={errors.titulo} />
-                        <FormField label="Autor" name="author" type="text" {...register("autor", { required: "Este campo es requerido" })} error={errors.autor} />
-                        <FormField label="ISBN" name="isbn" type="text" {...register("isbn", { required: "Este campo es requerido" })} error={errors.isbn} />
-                        <FormField label="Editorial" name="publisher" type="text" {...register("editorial", { required: "Este campo es requerido" })} error={errors.editorial} />
+                        <FormField label="Título" name="title" type="text" placeholder="Titulo del libro" {...register("titulo", { required: "Este campo es requerido" })} error={errors.titulo} />
+                        <FormField label="Autor" name="author" type="text" placeholder="Nombre del autor" {...register("autor", { required: "Este campo es requerido" })} error={errors.autor} />
+                        <FormField label="ISBN" name="isbn" type="text" placeholder="Introduzca el isbn" {...register("isbn", { required: "Este campo es requerido" })} error={errors.isbn} />
+                        <FormField label="Editorial" name="publisher" type="text" placeholder="Introduzca la editorial" {...register("editorial", { required: "Este campo es requerido" })} error={errors.editorial} />
                         <FormField label="Fecha de Publicación" name="publicationDate" type="date" {...register("fecha_publicacion", { required: "Este campo es requerido" })} error={errors.fecha_publicacion} />
-                        <FormField label="Cantidad" name="quantity" type="number" {...register("cantidad", { required: "Este campo es requerido" })} error={errors.cantidad} />
+                        <FormField label="Cantidad" name="quantity" type="number" placeholder="Introduzca la cantidad" {...register("cantidad", { required: "Este campo es requerido" })} error={errors.cantidad} />
                         <div className="md:col-span-2 flex items-end gap-8">
                             <FormField
                                 label="Genero"
                                 name="genre"
+                                placeholder="Seleccione un género"
                                 options={opcionesGeneros}
                                 {...register("genero", { required: "Este campo es requerido" })}
                             />
@@ -88,7 +89,7 @@ function BookForm() {
                                 {...register("estado")} />
                         </div>
                         <div className="md:col-span-2">
-                            <FormField label="Descripción" name="description" type="textarea" {...register("descripcion")} />
+                            <FormField label="Descripción" name="description" type="textarea" placeholder="Opcional" {...register("descripcion")} />
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { getGenres, newGenre, getGenre } from "../services/api";
+import { getGenres, newGenre, getGenre, deleteGenre } from "../services/api";
 
 import { toast } from "react-hot-toast"
 
@@ -27,11 +27,22 @@ export const useCreateGenre = () => {
         mutationFn: (newGenreData) => newGenre(newGenreData),
 
         onSuccess: () => {
-            queryClient.invalidateQueries('genres')
+            queryClient.invalidateQueries({ queryKey: ["genres"] })
             toast.success("Genero creado con exito")
         },
-        onError: () => {
-            toast.error("Error al crear el genero")
-        }
+        onError: () => toast.error("Error al crear el genero")
+    })
+}
+
+export const useDeleteGenre = () => {
+    const queryClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: (ids) => deleteGenre(ids),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["genres"] })
+            toast.success("Generos Eliminados")
+        },
+        onError: () => toast.error("Error al eliminar el género")
     })
 }

@@ -73,7 +73,7 @@ function LoginPage() {
             })}
           />
         </div>
-        {errors.root && <span className="text-white text-sm font-bold flex justify-center mb-5">{errors.root.message}</span>}
+        {errors.root && <span className="text-brand-500 md:text-brand-100  text-sm font-bold flex justify-center mb-5">{errors.root.message}</span>}
         <div className="flex items-center justify-center">
           <Button type="submit" variant="green" disabled={isSubmitting}>
             {isSubmitting ? "Cargando..." : "Ingresar"}</Button>

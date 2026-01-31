@@ -11,7 +11,14 @@ export const useCreateUser = () => {
 
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['users'] })
+            toast.success('¡Usuario creado correctamente!');
         },
+        onError: (error) => {
+            const serverError = error.response?.data;
+            const message = serverError?.username?.[0] || serverError?.detail || "Intente de nuevo";
+
+            toast.error(message);
+        }
     })
 
 }
@@ -19,7 +26,7 @@ export const useCreateUser = () => {
 export const useUsers = (data) => {
     return useQuery({
         queryKey: ['users', data],
-        queryFn: () => getUsers(data) ,
+        queryFn: () => getUsers(data),
         select: (response) => response.data.map(user => ({
             ...user,
             date_joined: new Date(user.date_joined).toLocaleDateString('es-ES')

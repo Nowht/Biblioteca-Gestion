@@ -1,7 +1,8 @@
-from rest_framework import viewsets, serializers, filters
+from rest_framework import viewsets, serializers, filters, status
 from django.db import transaction
 from django.db.models import Count
 from django.db.models.functions import TruncDate
+from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import SAFE_METHODS, BasePermission
@@ -52,6 +53,16 @@ class GeneroViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
     queryset = Genero.objects.all()
     serializer_class = GeneroSerializer
+
+    @action(detail=False, methods=['post'])
+    def bulk_delete(self, request):
+        ids = request.data.get('ids', [])
+        if not ids:
+            return Response({"No se proporcionaron IDs"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        Genero.objects.filter(id__in=ids).delete()
+
+        return Response({"Géneros eliminados correctamente"}, status=status.HTTP_204_NO_CONTENT)
 
 class PrestamoViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
