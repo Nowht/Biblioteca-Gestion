@@ -18,7 +18,7 @@ class Libro(models.Model):
     isbn = models.CharField(max_length=13, unique=True)
     editorial = models.CharField(max_length=200)
     fecha_publicacion = models.DateField()
-    portada = models.URLField(blank=True)
+    portada = models.ImageField(upload_to="portadas", null=True)
     cantidad = models.PositiveIntegerField(default=1)
     descripcion = models.TextField(blank=True, default="Sin descripción disponible")
 

@@ -17,3 +17,6 @@ frontend/dist/
 
 # Archivos de sistema
 .DS_Store
+
+#Carpetas
+media/

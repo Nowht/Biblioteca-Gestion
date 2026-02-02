@@ -15,7 +15,7 @@ function BookDetailPage() {
 
   return (
     <div className=" grid grid-cols-1 md:grid-cols-2 place-items-center min-h-screen">
-      <BookImageSection />
+      <BookImageSection img={book.portada} />
       <BookInfoSection info={book} />
     </div>
   )

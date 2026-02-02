@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom"
 
 import { useCreateBook, useUpdateBook, useBook } from "../../hooks/useBooks"
 
-import { Plus } from "lucide-react"
+import { Plus, ImagePlus } from "lucide-react"
 
 import { useGenres } from "../../hooks/useGenres"
 
@@ -26,14 +26,14 @@ function BookForm() {
     const createMutation = useCreateBook()
     const updateMutation = useUpdateBook()
 
-    const { register, handleSubmit, reset, formState: { isSubmitting, errors } } = useForm()
+    const { register, handleSubmit, reset, formState: { errors }, watch } = useForm()
 
     useEffect(() => {
         if (isEditMode && libro) {
             reset(libro)
+            setPreview(libro.portada)
         }
     }, [isEditMode, libro, reset])
-
 
     const { data: generos, isLoading: cargando } = useGenres()
 
@@ -44,11 +44,34 @@ function BookForm() {
         label: g.nombre
     })) : []
 
+    const imgsubida = watch("portada")
+    const [preview, setPreview] = useState(null)
+
+    useEffect(() => {
+        if (imgsubida && imgsubida?.length > 0 && imgsubida[0] instanceof File) {
+            const file = imgsubida[0]
+            const url = URL.createObjectURL(file)
+            setPreview(url)
+
+            return () => URL.revokeObjectURL(url)
+        }
+    }, [imgsubida])
+
     const onSubmit = (data) => {
         if (isEditMode) {
-            updateMutation.mutate({ id, data })
+            const finaldata = {
+                ...data,
+                portada: data.portada[0]
+            }
+            console.log(finaldata)
+            updateMutation.mutate({ id, data: finaldata })
         } else {
-            createMutation.mutate(data)
+
+            const finaldata = {
+                ...data,
+                portada: data.portada[0]
+            }
+            createMutation.mutate(finaldata)
         }
     }
 
@@ -94,11 +117,28 @@ function BookForm() {
                     </div>
                 </div>
 
-                <div className="lg:col-span-1 flex items-center justify-center my-2 p-6">
-                    <div className="flex-1 sticky top-6 border-2 border-dashed border-gray-300 rounded-lg p-4 h-96 flex items-center justify-center text-gray-500">
-                        {/* Aquí irá tu lógica de previsualización de imagen */}
-                        Espacio para Portada
-                    </div>
+                <div className="lg:col-span-1 flex flex-col items-center justify-center my-2 p-6">
+                    <label htmlFor="file-upload" className="flex flex-col items-center justify-center w-full h-96 cursor-pointer border-dashed border">
+                        <div className="flex flex-col items-center justify-center pt-5 pb-6 text-brand-500">
+                            <ImagePlus size={20} />
+                            <span className="mb-2 text-sm font-semibold">Haz clic para subir</span>
+                            <span className="text-xs">PNG, JPG o GIF</span>
+                        </div>
+                        <input
+                            id="file-upload"
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            {...register("portada")}
+                        />
+                        {preview && (
+                            <div className="mt-4">
+                                <img src={preview} alt="Vista previa" style={{ width: '200px' }} />
+                            </div>
+                        )}
+                        {imgsubida?.length > 0 && <span>Archivo {imgsubida[0]?.name}</span>}
+                    </label>
+
                 </div>
 
                 {/* BOTONERA (Ocupa todo el ancho abajo) */}
