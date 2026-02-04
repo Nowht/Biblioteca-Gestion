@@ -2,10 +2,13 @@ import SectionHero from "../components/ui/SectionHero"
 import LoanItem from "../components/features/LoanItem"
 import Modal from "../components/common/Modal"
 import RenewLoanModal from "../components/modalcontent/RenewLoanModal"
+import LoadingMessage from "../components/common/LoadingMessage"
+import ErrorMessage, {getErrorMessage} from "../components/common/ErrorMessage"
 
 import { useState, useEffect } from "react"
 
 import { useLoans } from "../hooks/useLoans"
+import { get } from "react-hook-form"
 
 function LoansAdminPage() {
   const [searchquery, setSearchQuery] = useState("")
@@ -13,7 +16,7 @@ function LoansAdminPage() {
   const [loandata, setLoanData] = useState([])
   const [isActive, setIsActive] = useState(true)
 
-  const { data: loansdata, isLoading, isError, error } = useLoans(searchquery, !isActive)
+  const { data: loansdata, isLoading, isError, error, refetch } = useLoans(searchquery, !isActive)
 
   const renewmodal = (data) => {
     setLoanData({
@@ -26,6 +29,9 @@ function LoansAdminPage() {
   const selectedbutton = "bg-brand-500 text-white"
   const unselectedbutton = "bg-brand-100 text-brand-500"
 
+  if (isLoading) return <LoadingMessage message="Cargando Prestamos..." />
+  if (isError) return <ErrorMessage message={getErrorMessage(error)} retryFn={refetch} />
+
   return (
     <SectionHero
       title="Administración de Préstamos"
@@ -33,9 +39,6 @@ function LoansAdminPage() {
       createTo="/dashboard/loans/add"
       onSearch={setSearchQuery}
     >
-
-      {isLoading && (<div>Cargando Prestamos...</div>)}
-      {isError && (<div>Error: {error.message}</div>)}
 
       <div className="flex">
         <button

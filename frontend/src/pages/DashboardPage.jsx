@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom"
 
-import MetricCard from "../components/ui/MetricCard"
-
 import { LineChart } from "../components/charts/LineChart"
 
+import MetricCard from "../components/ui/MetricCard"
 import ListLayout from "../components/features/ListLayout"
 import RecentLoansList from "../components/features/RecentLoansList"
 import UserItems from "../components/features/UserItems"
+import ErrorMessage, {getErrorMessage} from "../components/common/ErrorMessage.jsx"
+import LoadingMessage from "../components/common/LoadingMessage.jsx"
 
-import { Book, Users, HandHelping, Calendar } from "lucide-react"
+import { Book, Users, HandHelping} from "lucide-react"
 
 import { useContext } from "react"
 
@@ -18,13 +19,23 @@ import { useStats, useChartStats, useRecentStats } from "../hooks/useStats.js"
 
 function DashboardPage() {
 
-  const { data: cardstats, isLoading } = useStats()
+  const { data: cardstats, isLoading, isError, error } = useStats()
 
   const { user } = useContext(AuthContext)
 
-  const { data: chartstats, isLoading: cargando } = useChartStats()
+  const { data: chartstats, isLoading: cargando, isError: error_chart, error: error_chart_msg } = useChartStats()
 
-  const { data: recent, isLoading: cargando_reciente } = useRecentStats()
+  const { data: recent, isLoading: cargando_reciente, isError: error_recent, error: error_recent_msg } = useRecentStats()
+
+  if (isLoading || cargando || cargando_reciente) {
+    return <LoadingMessage />
+  }
+
+  if (isError || error_chart || error_recent) {
+    const errorMsg = getErrorMessage(error) || getErrorMessage(error_chart_msg) || getErrorMessage(error_recent_msg)
+    return <ErrorMessage message={errorMsg} />
+  }
+
 
   return (
     <>
@@ -44,13 +55,12 @@ function DashboardPage() {
             </div>
           </>
         )}
-        {isLoading && <p>Cargando visualizaciones...</p>}
       </section>
 
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <MetricCard title="Libros" value={cardstats?.libros || 0} icon={<Book size={32} />} />
         <MetricCard title="Usuarios" value={cardstats?.usuarios || 0} icon={<Users size={32} />} />
-        <MetricCard title="Prestamos" value={cardstats?.prestamos || 0} icon={<HandHelping size={32} />} />
+        <MetricCard title="Prestamos" value={cardstats?.Prestamos || 0} icon={<HandHelping size={32} />} />
       </section>
 
       <section className="mb-8">

@@ -1,6 +1,8 @@
 import SectionHero from "../components/ui/SectionHero"
 import ListLayout from "../components/features/ListLayout"
 import UserItemAdmin from "../components/features/UserItemAdmin"
+import ErrorMessage, { getErrorMessage } from "../components/common/ErrorMessage"
+import LoadingMessage from "../components/common/LoadingMessage"
 
 import Modal from "../components/common/Modal"
 import UserDetailsModal from "../components/modalcontent/UserDetailsModal"
@@ -14,11 +16,11 @@ import { useUsers, useDeleteUser } from "../hooks/useUsers"
 function UsersAdminPage() {
 
     // Busqueda 
-    const [ serachquery, setSearchQuery ] = useState("")
+    const [serachquery, setSearchQuery] = useState("")
 
     // Cargador de usuarios
-    const { data: users, isLoading, isError } = useUsers(serachquery)
-    
+    const { data: users, isLoading, isError, error, refetch } = useUsers(serachquery)
+
     // Metodo para eliminar usuarios
     const deleteUserMutation = useDeleteUser()
 
@@ -45,11 +47,13 @@ function UsersAdminPage() {
         setIsDeleteOpen(true)
     }
 
+    if (isLoading) return <LoadingMessage message="Cargando usuarios" />
+    if (isError) return <ErrorMessage message={getErrorMessage(error)} retryFn={refetch} />
+
     return (
         <SectionHero title="Administración de Usuarios" paragraph="Gestiona y Crea Usuarios" createTo="/dashboard/users/add" onSearch={setSearchQuery}>
             <div className="h-full overflow-y-auto pr-2">
                 <ListLayout>
-                    {isLoading && <p>Cargando usuarios...</p>}
                     {users && users.map((user) => (
                         <UserItemAdmin
                             key={user.id}
@@ -62,7 +66,7 @@ function UsersAdminPage() {
                 </ListLayout>
             </div>
 
-            <Modal isOpen={isDetailOpen} onClose={() => {setIsDetailOpen(false), setSelectedUser(null)}} title="Detalles Usuario">
+            <Modal isOpen={isDetailOpen} onClose={() => { setIsDetailOpen(false), setSelectedUser(null) }} title="Detalles Usuario">
                 {selectedUser && <UserDetailsModal userdata={selectedUser} />}
             </Modal>
 
@@ -71,11 +75,11 @@ function UsersAdminPage() {
             </Modal>
 
             <Modal isOpen={isDeleteOpen} onClose={() => setIsDeleteOpen(false)} title="Eliminar Usuario">
-                {selectedUser && <ConfirmActionModal 
-                title={selectedUser.username}
-                onCancel={() => setIsDeleteOpen(false)}
-                onConfirm={() => deleteUserMutation.mutate(selectedUser.id)}
-                isLoading={deleteUserMutation.isPending} 
+                {selectedUser && <ConfirmActionModal
+                    title={selectedUser.username}
+                    onCancel={() => setIsDeleteOpen(false)}
+                    onConfirm={() => deleteUserMutation.mutate(selectedUser.id)}
+                    isLoading={deleteUserMutation.isPending}
                 />}
             </Modal>
         </SectionHero>

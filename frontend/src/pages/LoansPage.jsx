@@ -1,7 +1,8 @@
 import SectionHero from "../components/ui/SectionHero"
-
 import ListLayout from "../components/features/ListLayout"
 import LoanItem from "../components/features/LoanItem"
+import LoadingMessage from "../components/common/LoadingMessage"
+import ErrorMessage, {getErrorMessage} from "../components/common/ErrorMessage"
 
 import { History, Clock } from "lucide-react"
 
@@ -14,12 +15,13 @@ function LoansPage() {
     const [searchquery, setSearchQuery] = useState("")
     const [isActive, setIsActive] = useState(true)
 
-    const { data, isLoading } = useLoans(searchquery, !isActive)
+    const { data, isLoading, isError, error, refetch } = useLoans(searchquery, !isActive)
 
     const selectedbutton = "bg-brand-500 text-white"
     const unselectedbutton = "bg-brand-100 text-brand-500"
 
-    if (isLoading) return <div className="text-2xl text-center">Cargando...</div>
+    if (isLoading) return <LoadingMessage message="Cargando Prestamos..." />
+    if(isError) return <ErrorMessage message={getErrorMessage(error)} retryFn={refetch} />
 
     return (
         <div className="px-8 py-4">

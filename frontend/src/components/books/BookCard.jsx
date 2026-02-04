@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
 
+import PortadaPlaceholder from "../common/PortadaPlaceholder"
+
 function BookCard({ to, book }) {
     return (
         <article className="relative transition duration-300 ease-in-out md:hover:scale-105">
@@ -7,7 +9,7 @@ function BookCard({ to, book }) {
                 <figure className="bg-brand-200 w-40">
                     {book.portada ? (
                         <img src={book.portada} alt={`Portada del libro: ${book.titulo}`} className="h-auto object-cover" />
-                    ): <div className="h-auto">Sin portada</div>}
+                    ): <PortadaPlaceholder />}
                 </figure>
                 <div className="text-center space-y-1">
                     <header>
