@@ -68,3 +68,35 @@ npm run dev
 La aplicación web estará disponible en el puerto local indicado por Vite (usualmente `http://localhost:5173/`).
 
 ## 📸 Capturas de Pantalla
+
+<p align="center">
+<img src="./screenshots/Inicio.png" alt="Pagina de inicio" width="750px" />
+</p>
+
+<p align="center">
+<img src="./screenshots/Detalles_Libros.png" alt="Detalles libros" width="750px" />
+</p>
+
+<p align="center">
+<img src="./screenshots/Dashboard.png" alt="Panel de control" width="750px" />
+</p>
+
+<p align="center">
+<img src="./screenshots/Admin_Dashboard_Usuarios.png" alt="Administracion de usuarios" width="750px" />
+</p>
+
+<p align="center">
+<img src="./screenshots/Admin_Dashboard_Prestamos.png" alt="Administracion de prestamos" width="750px" />
+</p>
+
+<p align="center">
+<img src="./screenshots/Admin_Dashboard_Catalogo_Libros.png" alt="Catalogo de libros" width="750px" />
+</p>
+
+<p align="center">
+<img src="./screenshots/Admin_Dashboard_Formulario_Agregar_Libros.png" alt="Agregar Libro" width="750px" />
+</p>
+
+<p align="center">
+<img src="./screenshots/Admin_Dashboard_Devoluciones.png" alt="Administracion de devoluciones" width="750px" />
+</p>
