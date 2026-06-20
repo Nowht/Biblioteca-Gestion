@@ -7,16 +7,18 @@ import toast from "react-hot-toast";
 
 export const useCreateBook = () => {
     const queryClient = useQueryClient()
+    const navigate = useNavigate()
 
     return useMutation({
         mutationFn: (newBookdata) => newBook(newBookdata),
 
         onSuccess: () => {
+            navigate("/dashboard/books")
             queryClient.invalidateQueries({queryKey:['books']})
             toast.success("¡Libro creado correctamente!")
         },
         onError: ()=>{
-            toast.error("Error al crear el libro. Intent de nuevo")
+            toast.error("Error al crear el libro. Intente de nuevo")
         }
     })
 }

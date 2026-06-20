@@ -48,7 +48,15 @@ export const useUpdateUser = () => {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: ({ id, data }) => updateUser(id, data),
+        mutationFn: ({ id, data }) => {
+            const cleanData = {...data};
+
+            if(!cleanData.password || cleanData.password.trim() == ""){
+                delete cleanData.password;
+            }
+
+            return updateUser(id, cleanData);
+        },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['users'] })
             toast.success("¡El Usuario se ha actualizado exitosamente!")
